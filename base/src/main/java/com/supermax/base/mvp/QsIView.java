@@ -8,6 +8,8 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import com.supermax.base.common.dialog.QsProgressDialog;
+
 /*
  * @Author yinzh
  * @Date   2018/10/12 16:40

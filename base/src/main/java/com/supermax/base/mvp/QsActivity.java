@@ -153,7 +153,7 @@ public abstract class QsActivity<P extends QsPresenter> extends FragmentActivity
                 view.setVisibility(View.GONE);
             }
 
-            View reloadView = view.findViewById(R.id.super_relaod_in_default_view);
+            View reloadView = view.findViewById(R.id.super_reload_in_default_view);
             if (reloadView != null) reloadView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -300,7 +300,7 @@ public abstract class QsActivity<P extends QsPresenter> extends FragmentActivity
             mProgressDialog.setMessage(message);
             mProgressDialog.setCancelable(cancelAble);
             if (!mProgressDialog.isAdded()) {
-                QsHelper.getInstance().commitDialogFragment(getSupportFragmentManager(), mProgressDialog);
+//                QsHelper.getInstance().commitDialogFragment(getSupportFragmentManager(), mProgressDialog);
             }
         } else {
             L.e(initTag(), "you should override the method 'Application.getLoadingDialog' and return a dialog when called the method : loading(...) ");

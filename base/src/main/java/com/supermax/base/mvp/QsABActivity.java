@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ViewAnimator;
 
+import com.supermax.base.R;
+import com.supermax.base.common.dialog.QsProgressDialog;
 import com.supermax.base.common.utils.QsHelper;
 import com.supermax.base.common.viewbind.OnKeyDownListener;
 import com.supermax.base.common.viewbind.ViewBindHelper;
@@ -18,7 +20,7 @@ import com.supermax.base.mvp.presenter.QsPresenter;
 public abstract class QsABActivity <P extends QsPresenter> extends AppCompatActivity implements QsIABActivity{
 
     private   P                 presenter;
-    protected QsProgressDialog  mProgressDialog;
+    protected QsProgressDialog mProgressDialog;
     private ViewAnimator mViewAnimator;
     private   boolean           hasInitData;
     private OnKeyDownListener onKeyDownListener;
@@ -32,7 +34,7 @@ public abstract class QsABActivity <P extends QsPresenter> extends AppCompatActi
     }
 
     @Override public int layoutId() {
-//        return R.layout.qs_framelayout;
+        return R.layout.super_framelayout;
     }
 
     @Override

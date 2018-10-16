@@ -17,6 +17,7 @@ import com.supermax.base.common.widget.viewpager.InnerScrollerContainer;
 import com.supermax.base.common.widget.viewpager.OuterPagerAdapter;
 import com.supermax.base.common.widget.viewpager.OuterScroller;
 import com.supermax.base.common.widget.viewpager.QsViewPager;
+import com.supermax.base.common.widget.viewpager.ViewPagerHelper;
 import com.supermax.base.mvp.fragment.QsIFragment;
 import com.supermax.base.mvp.model.QsModelPager;
 
@@ -60,7 +61,7 @@ public class QsViewPagerAdapter extends PagerAdapter implements OuterPagerAdapte
      * 设置数据
      */
     public void setModelPager(QsModelPager[] modelPager) {
-        pagerHelper.setViewPagerData(data);
+//        pagerHelper.setViewPagerData(data);
     }
 
     /**

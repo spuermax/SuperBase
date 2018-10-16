@@ -9,6 +9,7 @@ import com.supermax.base.common.viewbind.annotation.Bind;
 import com.supermax.base.common.viewbind.annotation.BindBundle;
 import com.supermax.base.common.viewbind.annotation.OnClick;
 import com.supermax.base.mvp.QsIView;
+import com.supermax.base.mvp.adapter.QsListAdapterItem;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -95,12 +96,12 @@ public class ViewBindHelper {
                     ((QsIView) target).onViewClick(v);
                 }else if (target instanceof QsListAdapterItem) {
                     ((QsListAdapterItem) target).onViewClick(v);
-                } else if (target instanceof QsRecycleAdapterItem) {
-                    ((QsRecycleAdapterItem) target).onViewClick(v);
-                } else if (target instanceof QsDialogFragment) {
-                    ((QsDialogFragment) target).onViewClick(v);
-                } else {
-                    L.e(getTag(), "Invalid @OnClick target, support only Activity Fragment QsListAdapterItem and QsRecycleAdapterItem, not support!");
+//                } else if (target instanceof QsRecycleAdapterItem) {
+//                    ((QsRecycleAdapterItem) target).onViewClick(v);
+//                } else if (target instanceof QsDialogFragment) {
+//                    ((QsDialogFragment) target).onViewClick(v);
+//                } else {
+//                    L.e(getTag(), "Invalid @OnClick target, support only Activity Fragment QsListAdapterItem and QsRecycleAdapterItem, not support!");
                 }
             }
         };
