@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- viewpager -->
+    <declare-styleable name="PagerSlidingTabStrip">
+        <attr name="psts_TextSize" format="dimension"/>
+        <attr name="psts_IndicatorColor" format="color"/>
+        <attr name="psts_IndicatorWidth" format="dimension"/>
+        <attr name="psts_IndicatorHeight" format="dimension"/>
+        <attr name="psts_IndicatorCorner" format="dimension"/>
+        <attr name="psts_UnderlineColor" format="color"/>
+        <attr name="psts_DividerColor" format="color"/>
+        <attr name="psts_SelectedTextColor" format="color"/>
+        <attr name="psts_UnSelectedTextColor" format="color"/>
+        <attr name="psts_UnderlineHeight" format="dimension"/>
+        <attr name="psts_DividerPadding" format="dimension"/>
+        <attr name="psts_TabPaddingLeftRight" format="dimension"/>
+        <attr name="psts_ScrollOffset" format="dimension"/>
+        <attr name="psts_TabBackground" format="reference"/>
+        <attr name="psts_ShouldExpand" format="boolean"/>
+        <attr name="psts_TextAllCaps" format="boolean"/>
+    </declare-styleable>
+
+    <!--PtrFrameLayout-->
+    <declare-styleable name="PtrFrameLayout">
+        <attr name="ptr_header" format="reference"/>
+        <attr name="ptr_content" format="reference"/>
+        <attr name="ptr_resistance" format="float"/>
+        <attr name="ptr_ratio_of_header_height_to_refresh" format="float"/>
+        <attr name="ptr_duration_to_close" format="integer"/>
+        <attr name="ptr_duration_to_close_header" format="integer"/>
+        <attr name="ptr_pull_to_fresh" format="boolean"/>
+        <attr name="ptr_keep_header_when_refresh" format="boolean"/>
+    </declare-styleable>
+</resources>
