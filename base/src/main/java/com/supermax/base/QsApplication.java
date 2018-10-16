@@ -2,7 +2,9 @@ package com.supermax.base;
 
 import android.app.Activity;
 import android.app.Application;
+import android.support.annotation.LayoutRes;
 
+import com.supermax.base.common.dialog.QsProgressDialog;
 import com.supermax.base.common.utils.QsHelper;
 
 /*
@@ -39,5 +41,24 @@ public abstract class QsApplication extends Application {
     }
 
     public void onActivityDestroy(Activity activity) {
+    }
+
+    /**
+     * 公共progressDialog
+     */
+    public QsProgressDialog getLoadingDialog() {
+        return null;
+    }
+
+    public @LayoutRes int loadingLayoutId() {
+        return 0;
+    }
+
+    public @LayoutRes int emptyLayoutId() {
+        return 0;
+    }
+
+    public @LayoutRes int errorLayoutId() {
+        return 0;
     }
 }

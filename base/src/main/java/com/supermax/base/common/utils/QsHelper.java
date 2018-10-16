@@ -1,6 +1,10 @@
 package com.supermax.base.common.utils;
 
+import android.support.annotation.LayoutRes;
+import android.support.annotation.StringRes;
+
 import com.supermax.base.QsApplication;
+import com.supermax.base.common.threadpoll.QsThreadPollHelper;
 
 /*
  * @Author yinzh
@@ -28,8 +32,16 @@ public class QsHelper {
         return ScreenHelper.getInstance();
     }
 
+    public QsThreadPollHelper getThreadHelper() {
+        return QsThreadPollHelper.getInstance();
+    }
 
+    public String getString(@StringRes int resId) {
+        return getApplication().getString(resId);
+    }
 
-
+    public String getString(@StringRes int resId, Object... formatArgs) {
+        return getApplication().getString(resId, formatArgs);
+    }
 
 }
