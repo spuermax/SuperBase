@@ -5,6 +5,7 @@ import android.app.Application;
 import android.support.annotation.LayoutRes;
 
 import com.supermax.base.common.dialog.QsProgressDialog;
+import com.supermax.base.common.log.L;
 import com.supermax.base.common.utils.QsHelper;
 
 /*
@@ -17,6 +18,7 @@ public abstract class QsApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        if (isLogOpen()) L.init(true);
         QsHelper.getInstance().init(this);
     }
 
