@@ -16,7 +16,7 @@ import com.supermax.base.mvp.model.QsModelPager;
 public interface QsIViewPagerActivity extends QsIActivity{
     void onPageScrollStateChanged(int state);
 
-    void pnPageSelected(View currentTabItem, View oldTabItem, int position, int oldPosition);
+    void onPageSelected(View currentTabItem, View oldTabItem, int position, int oldPosition);
 
     void onPageScrolled(int position, float positionOffset, int positionOffsetPixels);
 

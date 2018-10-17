@@ -61,7 +61,7 @@ public class QsViewPagerAdapter extends PagerAdapter implements OuterPagerAdapte
      * 设置数据
      */
     public void setModelPager(QsModelPager[] modelPager) {
-//        pagerHelper.setViewPagerData(data);
+        pagerHelper.setViewPagerData(modelPager);
     }
 
     /**

@@ -107,7 +107,7 @@ public class ViewPagerHelper {
             currentPageIndex = position;
             if (viewPagerFragment != null) viewPagerFragment.onPageSelected(tabs == null ? null : tabs.tabsContainer.getChildAt(position), oldView, position, oldPosition);
             if (viewPagerABActivity != null) viewPagerABActivity.onPageSelected(tabs == null ? null : tabs.tabsContainer.getChildAt(position), oldView, position, oldPosition);
-//            if (viewPagerActivity != null) viewPagerActivity.onPageSelected(tabs == null ? null : tabs.tabsContainer.getChildAt(position), oldView, position, oldPosition);
+            if (viewPagerActivity != null) viewPagerActivity.onPageSelected(tabs == null ? null : tabs.tabsContainer.getChildAt(position), oldView, position, oldPosition);
             if (tabs != null) oldView = tabs.tabsContainer.getChildAt(position);
             oldPosition = position;
         }

@@ -76,9 +76,9 @@ public abstract class QsDialogFragment extends DialogFragment {
 
     protected abstract View getDialogView(LayoutInflater inflater, ViewGroup viewGroup);
 
-//    public void show() {
-//        QsHelper.getInstance().commitDialogFragment(this);
-//    }
+    public void show() {
+        QsHelper.getInstance().commitDialogFragment(this);
+    }
 
 
 }

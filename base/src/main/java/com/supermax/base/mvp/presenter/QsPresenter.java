@@ -197,24 +197,23 @@ public class QsPresenter<V extends QsIView> {
     }
 
     public Drawable getDrawable(@DrawableRes int resId) {
-//        return QsHelper.getInstance().getDrawable(resId);
-        return null;
+        return QsHelper.getInstance().getDrawable(resId);
     }
 
-//    public int getColor(@ColorRes int resId) {
-//        return QsHelper.getInstance().getColor(resId);
-//    }
+    public int getColor(@ColorRes int resId) {
+        return QsHelper.getInstance().getColor(resId);
+    }
 
-//    public float getDimension(@DimenRes int resId) {
-//        return QsHelper.getInstance().getDimension(resId);
-//    }
+    public float getDimension(@DimenRes int resId) {
+        return QsHelper.getInstance().getDimension(resId);
+    }
 
-//    public boolean isSdCardAvailable() {
-//        return QsHelper.getInstance().isSdCardAvailable();
-//    }
+    public boolean isSdCardAvailable() {
+        return QsHelper.getInstance().isSdCardAvailable();
+    }
 
-//    public boolean isNetworkAvailable() {
-//        return QsHelper.getInstance().isNetworkAvailable();
-//    }
+    public boolean isNetworkAvailable() {
+        return QsHelper.getInstance().isNetworkAvailable();
+    }
 
 }

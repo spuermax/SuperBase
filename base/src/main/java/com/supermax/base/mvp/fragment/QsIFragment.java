@@ -24,5 +24,5 @@ public interface  QsIFragment extends QsIView{
 
     void onBackPressed();
 
-    void onFragmentSelectedInViewPage(boolean isSelected, int currentPosition, int totalCount);
+    void onFragmentSelectedInViewPager(boolean isSelected, int currentPosition, int totalCount);
 }
