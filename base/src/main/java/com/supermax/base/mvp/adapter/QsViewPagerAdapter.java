@@ -126,7 +126,7 @@ public class QsViewPagerAdapter extends PagerAdapter implements OuterPagerAdapte
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         this.container = container;
         Fragment fragment = getViewPagerData()[position].fragment;
-        if (fragment.isAdded()) {
+        if (!fragment.isAdded()) {
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out);
             transaction.add(fragment, fragment.getClass().getSimpleName() + position);
