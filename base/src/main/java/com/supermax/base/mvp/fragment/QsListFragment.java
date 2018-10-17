@@ -81,9 +81,6 @@ public abstract class QsListFragment <P extends QsPresenter, D> extends QsFragme
         return (getTopLayout() > 0 || getBottomLayout() > 0) ? R.layout.super_fragment_state_with_top_bottom : super.rootViewLayoutId();
     }
 
-
-
-
     /**
      * 初始化ListView
      */

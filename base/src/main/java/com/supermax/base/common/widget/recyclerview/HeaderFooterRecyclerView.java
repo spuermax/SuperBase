@@ -78,8 +78,8 @@ public class HeaderFooterRecyclerView extends RecyclerView{
 
     @Override
     public void setAdapter(@Nullable Adapter adapter) {
-        if(adapter != null){
-            adapter.unregisterAdapterDataObserver(mAdapterDataObserver);
+        if(mAdapter != null){
+            mAdapter.unregisterDataSetObserver(mAdapterDataObserver);
         }
 
         mAdapter = new HeaderFooterRecyclerAdapter(adapter, mHeaderViews, mFooterViews);
