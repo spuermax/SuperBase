@@ -18,7 +18,7 @@ public interface QsIListFragment<D> extends QsIFragment {
 
     int getHeaderLayout();
 
-    int getFooterayout();
+    int getFooterLayout();
 
     int getTopLayout();
 

@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.supermax.base.common.widget.recyclerview.HeaderFooterRecyclerView;
-import com.supermax.base.mvp.adapter.QsRecyclerAdapterItem;
+import com.supermax.base.mvp.adapter.QsRecycleAdapterItem;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import java.util.List;
  */
 public interface QsIRecyclerFragment<D> extends QsIFragment{
 
-    QsRecyclerAdapterItem<D> getRecyclerAdapterItem (LayoutInflater inflater, ViewGroup parent, int type);
+    QsRecycleAdapterItem<D> getRecycleAdapterItem (LayoutInflater inflater, ViewGroup parent, int type);
 
     int getHeaderLayout();
 

@@ -483,6 +483,12 @@ public abstract class QsABActivity<P extends QsPresenter> extends AppCompatActiv
         return onKeyDown(event, keyCode);
     }
 
+    @Override public boolean onKeyDown(KeyEvent event, int keyCode) {
+        return super.onKeyDown(keyCode, event);
+    }
+
+
+
     private void setDefaultViewClickListener(View view) {
         if (view != null) {
             View backView = view.findViewById(R.id.super_back_in_default_view);

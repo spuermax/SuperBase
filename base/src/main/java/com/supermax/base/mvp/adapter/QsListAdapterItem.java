@@ -24,12 +24,11 @@ public abstract class QsListAdapterItem<T> {
      * 如果你的API允许使用者重写你的方法，但是呢，你又需要你自己的方法(父方法)在重写的时候也被调用，这时候你可以使用@CallSuper标注
      */
     @CallSuper
-    public void initView(View contentView){
+    public void init(View contentView){
         ViewBindHelper bindHelper = new ViewBindHelper(this);
         bindHelper.bindView(contentView);
         bindHelper.release();
     }
-
     public abstract void bindData(T t, int position, int count);
 
     public void onViewClick(View view){}
