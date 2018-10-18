@@ -1,4 +1,4 @@
-package com.supermax.base.common.widget.viewpager;
+package com.supermax.base.common.widget.viewpager.headerpager;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;

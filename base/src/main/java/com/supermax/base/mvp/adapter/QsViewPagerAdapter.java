@@ -6,17 +6,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.supermax.base.common.log.L;
 import com.supermax.base.common.utils.QsHelper;
-import com.supermax.base.common.widget.viewpager.InnerScroller;
 import com.supermax.base.common.widget.viewpager.InnerScrollerContainer;
 import com.supermax.base.common.widget.viewpager.OuterPagerAdapter;
 import com.supermax.base.common.widget.viewpager.OuterScroller;
-import com.supermax.base.common.widget.viewpager.QsViewPager;
+import com.supermax.base.common.widget.viewpager.headerpager.QsViewPager;
 import com.supermax.base.common.widget.viewpager.ViewPagerHelper;
 import com.supermax.base.mvp.fragment.QsIFragment;
 import com.supermax.base.mvp.model.QsModelPager;

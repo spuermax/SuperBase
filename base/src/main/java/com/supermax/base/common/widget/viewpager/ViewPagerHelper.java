@@ -3,6 +3,7 @@ package com.supermax.base.common.widget.viewpager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.supermax.base.common.widget.viewpager.headerpager.QsViewPager;
 import com.supermax.base.mvp.QsIViewPagerABActivity;
 import com.supermax.base.mvp.QsIViewPagerActivity;
 import com.supermax.base.mvp.fragment.QsIFragment;
@@ -23,7 +24,7 @@ public class ViewPagerHelper {
     private QsIViewPagerFragment   viewPagerFragment;
     private QsIViewPagerABActivity viewPagerABActivity;
     private QsIViewPagerActivity   viewPagerActivity;
-    private QsViewPager            pager;
+    private QsViewPager pager;
     private PagerSlidingTabStrip   tabs;
     private QsModelPager[]         viewPagerData;
 
