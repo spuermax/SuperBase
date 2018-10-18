@@ -17,7 +17,7 @@
         android:layout_height="1px"
         android:background="@android:color/darker_gray"/>
 
-    <com.supermax.base.common.widget.viewpager.headerpager.QsViewPager
+    <com.supermax.base.common.widget.viewpager.QsViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

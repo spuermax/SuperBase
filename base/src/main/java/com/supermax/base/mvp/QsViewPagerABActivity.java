@@ -10,7 +10,7 @@ import android.view.View;
 import com.supermax.base.R;
 import com.supermax.base.common.log.L;
 import com.supermax.base.common.widget.viewpager.PagerSlidingTabStrip;
-import com.supermax.base.common.widget.viewpager.headerpager.QsViewPager;
+import com.supermax.base.common.widget.viewpager.QsViewPager;
 import com.supermax.base.common.widget.viewpager.ViewPagerHelper;
 import com.supermax.base.mvp.adapter.QsTabViewPagerAdapter;
 import com.supermax.base.mvp.adapter.QsViewPagerAdapter;

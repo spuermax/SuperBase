@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.supermax.base.common.widget.viewpager.PagerSlidingTabStrip;
-import com.supermax.base.common.widget.viewpager.headerpager.QsViewPager;
+import com.supermax.base.common.widget.viewpager.QsViewPager;
 import com.supermax.base.mvp.adapter.QsViewPagerAdapter;
 import com.supermax.base.mvp.model.QsModelPager;
 

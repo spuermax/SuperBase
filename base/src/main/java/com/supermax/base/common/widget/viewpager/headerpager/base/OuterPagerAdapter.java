@@ -1,4 +1,4 @@
-package com.supermax.base.common.widget.viewpager;
+package com.supermax.base.common.widget.viewpager.headerpager.base;
 
 /*
  * @Author yinzh

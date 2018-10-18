@@ -1,6 +1,6 @@
 package com.supermax.base.common.widget.viewpager.headerpager;
 
-import com.supermax.base.common.widget.viewpager.OuterScroller;
+import com.supermax.base.common.widget.viewpager.headerpager.base.OuterScroller;
 
 /*
  * @Author yinzh

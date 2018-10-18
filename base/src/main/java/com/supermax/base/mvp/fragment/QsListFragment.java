@@ -1,11 +1,9 @@
 package com.supermax.base.mvp.fragment;
 
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
@@ -15,8 +13,8 @@ import com.supermax.base.R;
 import com.supermax.base.common.aspect.ThreadPoint;
 import com.supermax.base.common.aspect.ThreadType;
 import com.supermax.base.common.log.L;
-import com.supermax.base.common.widget.viewpager.InnerScroller;
-import com.supermax.base.common.widget.viewpager.OuterScroller;
+import com.supermax.base.common.widget.viewpager.headerpager.InnerScroller;
+import com.supermax.base.common.widget.viewpager.headerpager.base.OuterScroller;
 import com.supermax.base.common.widget.viewpager.headerpager.InnerScrollerContainer;
 import com.supermax.base.mvp.adapter.QsListAdapterItem;
 import com.supermax.base.mvp.presenter.QsPresenter;

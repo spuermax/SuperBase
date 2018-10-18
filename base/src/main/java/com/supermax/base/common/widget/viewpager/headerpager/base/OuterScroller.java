@@ -1,7 +1,9 @@
-package com.supermax.base.common.widget.viewpager;
+package com.supermax.base.common.widget.viewpager.headerpager.base;
 
 import android.support.v4.view.ViewPager;
 import android.view.View;
+
+import com.supermax.base.common.widget.viewpager.headerpager.InnerScroller;
 
 /*
  * @Author yinzh
