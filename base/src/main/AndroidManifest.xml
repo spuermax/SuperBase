@@ -1,2 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.supermax.base" />
+    package="com.supermax.base">
+
+    <application>
+        <activity
+            android:name=".common.permission.activity.PermissionActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/translucent" />
+    </application>
+
+</manifest>
