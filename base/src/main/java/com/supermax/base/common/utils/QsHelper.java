@@ -51,6 +51,10 @@ public class QsHelper {
         return mApplication;
     }
 
+    public ImageHelper getImageHelper() {
+        return ImageHelper.getInstance();
+    }
+
     public ScreenHelper getScreenHelper() {
         return ScreenHelper.getInstance();
     }
