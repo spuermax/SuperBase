@@ -4,7 +4,6 @@
     <application>
         <activity
             android:name=".common.permission.activity.PermissionActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/translucent" />
     </application>
 
