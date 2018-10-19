@@ -23,6 +23,10 @@ import java.util.Map;
  * @Author yinzh
  * @Date   2018/10/14 09:02
  * @Description: View层控件绑定，控件点击事件，Bundle值寻找
+ *          缓存机制提高性能
+ * 1，View层控件绑定
+ * 2，控件点击事件
+ * 3，Bundle值寻找
  */
 public class ViewBindHelper {
     private Object mTarget;
