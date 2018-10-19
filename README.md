@@ -37,7 +37,7 @@
 
         dependencies {
             ...
-          implementation 'com.github.spuermax:SuperBase:0.2'
+          implementation 'com.github.spuermax:SuperBase:0.44'
         }   
         
         
