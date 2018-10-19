@@ -16,8 +16,11 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.ViewAnimator;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.supermax.base.R;
 import com.supermax.base.common.aspect.ThreadPoint;
 import com.supermax.base.common.aspect.ThreadType;
@@ -77,7 +80,6 @@ public abstract class QsActivity<P extends QsPresenter> extends FragmentActivity
             hasInitData = true;
             initData(savedInstanceState);
         }
-
     }
 
     @Override

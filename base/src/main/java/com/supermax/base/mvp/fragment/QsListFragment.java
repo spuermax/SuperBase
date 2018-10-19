@@ -149,6 +149,10 @@ public abstract class QsListFragment <P extends QsPresenter, D> extends QsFragme
         }
     }
 
+    /**
+     * 修改刷新分页的逻辑
+     * @param list
+     */
     @ThreadPoint(ThreadType.MAIN) @Override public void addData(List<D> list) {
         if (list != null && !list.isEmpty()) {
             mList.addAll(list);

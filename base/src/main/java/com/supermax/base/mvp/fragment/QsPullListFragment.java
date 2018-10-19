@@ -32,6 +32,7 @@ public abstract class QsPullListFragment<P extends QsPresenter, D> extends QsLis
     private             boolean canLoadingMore             = true;
     private PtrFrameLayout mPtrFrameLayout;
     protected LoadingFooter mLoadingFooter;
+    private boolean isRefresh;
 
     @Override public int layoutId() {
         return (!isOpenViewState() && (getTopLayout() > 0 || getBottomLayout() > 0)) ? R.layout.super_fragment_pull_listview_with_top_bottom : R.layout.super_fragment_pull_listview;

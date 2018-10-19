@@ -6,6 +6,7 @@ import android.support.annotation.LayoutRes;
 
 import com.supermax.base.common.dialog.QsProgressDialog;
 import com.supermax.base.common.log.L;
+import com.supermax.base.common.utils.ImageHelper;
 import com.supermax.base.common.utils.QsHelper;
 
 /*
@@ -63,4 +64,8 @@ public abstract class QsApplication extends Application {
     public @LayoutRes int errorLayoutId() {
         return 0;
     }
+
+    public void onCommonLoadImage(ImageHelper.Builder builder) {
+    }
+
 }
