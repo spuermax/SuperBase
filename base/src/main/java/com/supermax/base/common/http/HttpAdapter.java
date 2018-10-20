@@ -28,9 +28,11 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
+import okhttp3.Dispatcher;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -277,6 +279,39 @@ public class HttpAdapter {
         Object result = converter.jsonFromBody(body, returnType, method.getName(), requestTag);
         response.close();
         return result;
+    }
+
+
+
+    public void cancelRequest(Object requestTag) {
+        if (client != null && requestTag != null) {
+            synchronized (client.dispatcher()) {
+                Dispatcher dispatcher = client.dispatcher();
+                List<Call> queuedCalls = dispatcher.queuedCalls();
+                for (Call call : queuedCalls) {
+                    Request request = call.request();
+                    if (requestTag.equals(request.tag())) {
+                        L.i(TAG, "cancel queued request success... requestTag=" + requestTag + "  url=" + request.url());
+                        call.cancel();
+                    }
+                }
+
+                List<Call> runningCalls = dispatcher.runningCalls();
+                for (Call call : runningCalls) {
+                    Request request = call.request();
+                    if (requestTag.equals(request.tag())) {
+                        L.i(TAG, "cancel running request ... requestTag=" + requestTag + "  url=" + call.request().url());
+                        call.cancel();
+                    }
+                }
+            }
+        }
+    }
+
+    public void cancelAllRequest() {
+        if (client != null) {
+            client.dispatcher().cancelAll();
+        }
     }
 
 

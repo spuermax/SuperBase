@@ -15,6 +15,7 @@ import com.supermax.base.common.log.L;
 import com.supermax.base.common.model.QsModel;
 import com.supermax.base.common.utils.QsHelper;
 import com.supermax.base.common.widget.listview.LoadingFooter;
+import com.supermax.base.common.widget.toast.QsToast;
 import com.supermax.base.mvp.QsIView;
 import com.supermax.base.mvp.fragment.QsIPullToRefresh;
 import com.supermax.base.mvp.model.QsConstants;
@@ -84,8 +85,7 @@ public class QsPresenter<V extends QsIView> {
         } else {
             L.e(initTag(), "createHttpRequest Repeated tag:" + requestTag);
         }
-//        return QsHelper.getInstance().getHttpHelper().create(clazz, requestTag);
-        return null;
+        return QsHelper.getInstance().getHttpHelper().create(clazz, requestTag);
     }
 
     /**
@@ -94,7 +94,7 @@ public class QsPresenter<V extends QsIView> {
     protected void cancelAllHttpRequest() {
         try {
             for (String tag : tagList) {
-//                QsHelper.getInstance().getHttpHelper().cancelRequest(tag);
+                QsHelper.getInstance().getHttpHelper().cancelRequest(tag);
             }
             tagList.clear();
         } catch (Exception e) {
@@ -106,7 +106,7 @@ public class QsPresenter<V extends QsIView> {
         if (tagList.contains(requestTag)) {
             tagList.remove(requestTag);
             try {
-//                QsHelper.getInstance().getHttpHelper().cancelRequest(requestTag);
+                QsHelper.getInstance().getHttpHelper().cancelRequest(requestTag);
             } catch (Exception e) {
                 L.e(initTag(), "cancel http request failed :" + e.getMessage());
             }
@@ -128,7 +128,7 @@ public class QsPresenter<V extends QsIView> {
             return true;
         } else if (!isViewDetach()) {
             resetViewState();
-//            if (model != null && shouldToast) QsToast.show(model.getMessage());
+            if (model != null && shouldToast) QsToast.show(model.getMessage());
         }
         return false;
     }
