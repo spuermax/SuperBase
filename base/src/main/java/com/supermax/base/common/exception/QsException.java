@@ -8,9 +8,9 @@ package com.supermax.base.common.exception;
 public class QsException extends RuntimeException{
 
     private final QsExceptionType mType;
-    private final String requestTag;
+    private final Object requestTag;
 
-    public QsException(QsExceptionType type, String requestTag, String message) {
+    public QsException(QsExceptionType type, Object requestTag, String message) {
         super(message);
         this.mType =type;
         this.requestTag = requestTag;

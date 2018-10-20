@@ -25,6 +25,7 @@ import com.supermax.base.QsApplication;
 import com.supermax.base.common.aspect.ThreadPoint;
 import com.supermax.base.common.aspect.ThreadType;
 import com.supermax.base.common.dialog.QsProgressDialog;
+import com.supermax.base.common.http.HttpAdapter;
 import com.supermax.base.common.threadpoll.QsThreadPollHelper;
 
 import java.io.Closeable;
@@ -38,6 +39,7 @@ public class QsHelper {
     private static QsHelper helper = new QsHelper();
 
     private QsApplication mApplication;
+    private HttpAdapter   httpAdapter;
 
     public static QsHelper getInstance() {
         return helper;
@@ -62,6 +64,16 @@ public class QsHelper {
     public QsThreadPollHelper getThreadHelper() {
         return QsThreadPollHelper.getInstance();
     }
+
+    public HttpAdapter getHttpHelper() {
+        if (httpAdapter == null) {
+            synchronized (this) {
+                if (httpAdapter == null) httpAdapter = new HttpAdapter();
+            }
+        }
+        return httpAdapter;
+    }
+
 
     public void intent2Activity(Class clazz) {
         intent2Activity(clazz, null, 0, null, 0, 0);

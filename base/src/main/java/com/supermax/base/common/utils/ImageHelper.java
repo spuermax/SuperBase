@@ -111,7 +111,7 @@ public class ImageHelper {
         private boolean fitCenter;
         private boolean centerInside;
         private int[] mCorners;
-        private int mWidth;
+        private int mWidth;//指定大小的宽和高
         private int mHeight;
         private boolean noMemoryCache;
         private DiskCacheStrategy diskCacheStrategy;
@@ -174,6 +174,9 @@ public class ImageHelper {
             return this;
         }
 
+        /**
+         * 指定大小的宽和高
+         */
         public Builder resize(int width, int height) {
             this.mWidth = width;
             this.mHeight = height;
@@ -196,6 +199,11 @@ public class ImageHelper {
             return this;
         }
 
+        /**
+         * 异常展位图
+         * @param resourceId
+         * @return
+         */
         public Builder error(int resourceId) {
             this.errorId = resourceId;
             return this;
@@ -255,6 +263,10 @@ public class ImageHelper {
             return this;
         }
 
+        /**
+         * 禁止缓存功能
+         * @return
+         */
         public Builder noDiskCache() {
             diskCacheStrategy = DiskCacheStrategy.NONE;
             return this;

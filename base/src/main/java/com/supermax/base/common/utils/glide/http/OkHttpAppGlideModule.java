@@ -15,7 +15,10 @@ import java.io.InputStream;
 /**
  * @CreateBy qsmaxmin
  * @Date 2017/12/18 15:22
- * @Description
+ * @Description: 自定义模块功能可以将更改Glide配置，替换Glide组件等操作独立出来，使得我们能轻松地对Glide的各种配置进行自定义，并且又和Glide的图片加载逻辑没有任何交集，这也是一种低耦合编程方式的体现
+ * 这是Gilde 4和Glide 3最大的一个不同之处。在Glide 3中，我们定义了自定义模块之后，
+ * 还必须在AndroidManifest.xml文件中去注册它才能生效，
+ * 而在Glide 4中是不需要的，因为@GlideModule这个注解已经能够让Glide识别到这个自定义模块了
  */
 @GlideModule
 public class OkHttpAppGlideModule extends AppGlideModule {

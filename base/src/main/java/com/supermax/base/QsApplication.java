@@ -5,9 +5,12 @@ import android.app.Application;
 import android.support.annotation.LayoutRes;
 
 import com.supermax.base.common.dialog.QsProgressDialog;
+import com.supermax.base.common.http.HttpBuilder;
 import com.supermax.base.common.log.L;
 import com.supermax.base.common.utils.ImageHelper;
 import com.supermax.base.common.utils.QsHelper;
+
+import okhttp3.Response;
 
 /*
  * @Author yinzh
@@ -25,8 +28,7 @@ public abstract class QsApplication extends Application {
 
     public abstract boolean isLogOpen();
 
-
-
+    public abstract void initHttpAdapter(HttpBuilder builder);
 
     public void onActivityCreate(Activity activity) {
     }
@@ -66,6 +68,9 @@ public abstract class QsApplication extends Application {
     }
 
     public void onCommonLoadImage(ImageHelper.Builder builder) {
+    }
+
+    public void onCommonHttpResponse(Response response) {
     }
 
 }
