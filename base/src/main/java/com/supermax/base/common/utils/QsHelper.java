@@ -28,6 +28,8 @@ import com.supermax.base.common.dialog.QsProgressDialog;
 import com.supermax.base.common.http.HttpAdapter;
 import com.supermax.base.common.threadpoll.QsThreadPollHelper;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.Closeable;
 
 /*
@@ -63,6 +65,10 @@ public class QsHelper {
 
     public QsThreadPollHelper getThreadHelper() {
         return QsThreadPollHelper.getInstance();
+    }
+
+    @ThreadPoint(ThreadType.MAIN) public void eventPost(Object object) {
+        EventBus.getDefault().post(object);
     }
 
     public HttpAdapter getHttpHelper() {
