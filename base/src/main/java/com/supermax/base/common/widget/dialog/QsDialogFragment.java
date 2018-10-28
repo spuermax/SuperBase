@@ -32,25 +32,24 @@ public abstract class QsDialogFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ViewBindHelper bindHelper = new ViewBindHelper(this);
-        bindHelper.bindBundle(getArguments());
+        ViewBindHelper.bindBundle(this, getArguments());
         getDialog().setCanceledOnTouchOutside(true);
         final Window window = getDialog().getWindow();
         if (window != null) {
             window.setBackgroundDrawableResource(android.R.color.transparent);
-            window.getDecorView().setPadding(0,0,0,0);
+            window.getDecorView().setPadding(0, 0, 0, 0);
             WindowManager.LayoutParams params = window.getAttributes();
             setAttribute(params);
             window.setAttributes(params);
         }
 
-       View dialogView =  getDialogView(inflater, container);
-        bindHelper.bindView(dialogView);
-        bindHelper.release();
+        View dialogView = getDialogView(inflater, container);
+        ViewBindHelper.bindView(this, dialogView);
         return dialogView;
     }
 
-    @Override public void onStart() {
+    @Override
+    public void onStart() {
         super.onStart();
         initData();
     }
@@ -66,7 +65,7 @@ public abstract class QsDialogFragment extends DialogFragment {
 
     }
 
-    protected void setAttribute(WindowManager.LayoutParams params){
+    protected void setAttribute(WindowManager.LayoutParams params) {
         params.gravity = Gravity.BOTTOM;
         params.width = WindowManager.LayoutParams.MATCH_PARENT;
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;

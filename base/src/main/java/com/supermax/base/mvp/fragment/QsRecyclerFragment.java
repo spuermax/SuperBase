@@ -101,20 +101,17 @@ public abstract class QsRecyclerFragment <P extends QsPresenter, D> extends QsFr
             mRecyclerView = view.findViewById(android.R.id.list);
         }
         if (mRecyclerView == null) throw new RuntimeException("HeaderFooterRecyclerView is not exit or its id not 'android.R.id.list' in current layout!!");
-        ViewBindHelper bindHelper = null;
         if (getHeaderLayout() > 0) {
             headerView = inflater.inflate(getHeaderLayout(), null);
             mRecyclerView.addHeaderView(headerView);
-            bindHelper = new ViewBindHelper(this);
-            bindHelper.bindView(headerView);
+           ViewBindHelper.bindView(this, headerView);
         }
         if (getFooterLayout() > 0) {
             footerView = inflater.inflate(getFooterLayout(), null);
             mRecyclerView.addFooterView(footerView);
-            if (bindHelper == null) bindHelper = new ViewBindHelper(this);
-            bindHelper.bindView(footerView);
+            ViewBindHelper.bindView(this, footerView);
+
         }
-        if (bindHelper != null) bindHelper.release();
 
         mRecyclerView.addItemDecoration(new CustomItemDecoration());
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
