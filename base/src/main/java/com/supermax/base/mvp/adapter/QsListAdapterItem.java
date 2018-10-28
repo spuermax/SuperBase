@@ -4,6 +4,7 @@ import android.support.annotation.CallSuper;
 import android.view.View;
 
 import com.supermax.base.common.utils.QsHelper;
+import com.supermax.base.common.viewbind.ViewBindData;
 import com.supermax.base.common.viewbind.ViewBindHelper;
 
 /*
@@ -25,9 +26,7 @@ public abstract class QsListAdapterItem<T> {
      */
     @CallSuper
     public void init(View contentView){
-        ViewBindHelper bindHelper = new ViewBindHelper(this);
-        bindHelper.bindView(contentView);
-        bindHelper.release();
+       ViewBindHelper.bindView(this, contentView);
     }
     public abstract void bindData(T t, int position, int count);
 

@@ -71,13 +71,11 @@ public abstract class QsABActivity<P extends QsPresenter> extends AppCompatActiv
         super.onCreate(savedInstanceState);
         QsHelper.getInstance().getScreenHelper().pushActivity(this);
         QsHelper.getInstance().getApplication().onActivityCreate(this);
-        ViewBindHelper bindHelper = new ViewBindHelper(this);
-        bindHelper.bindBundle(getIntent().getExtras());
+        ViewBindHelper.bindBundle(this, getIntent().getExtras());
         initStatusBar();
         View view = initView();
         setContentView(view);
-        bindHelper.bindView(view);
-        bindHelper.release();
+        ViewBindHelper.bindView(this, view);
         if (isOpenEventBus() && !EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this);
         if (!isDelayData()) {
@@ -86,27 +84,32 @@ public abstract class QsABActivity<P extends QsPresenter> extends AppCompatActiv
         }
     }
 
-    @Override protected void onStart() {
+    @Override
+    protected void onStart() {
         super.onStart();
         QsHelper.getInstance().getApplication().onActivityStart(this);
     }
 
-    @Override protected void onResume() {
+    @Override
+    protected void onResume() {
         super.onResume();
         QsHelper.getInstance().getApplication().onActivityResume(this);
     }
 
-    @Override protected void onPause() {
+    @Override
+    protected void onPause() {
         super.onPause();
         QsHelper.getInstance().getApplication().onActivityPause(this);
     }
 
-    @Override protected void onStop() {
+    @Override
+    protected void onStop() {
         super.onStop();
         QsHelper.getInstance().getApplication().onActivityStop(this);
     }
 
-    @Override protected void onDestroy() {
+    @Override
+    protected void onDestroy() {
         super.onDestroy();
         if (presenter != null) {
             presenter.setDetach();
@@ -118,12 +121,14 @@ public abstract class QsABActivity<P extends QsPresenter> extends AppCompatActiv
         }
         mViewAnimator = null;
         onKeyDownListener = null;
-        if (isOpenEventBus() && EventBus.getDefault().isRegistered(this)) EventBus.getDefault().unregister(this);
+        if (isOpenEventBus() && EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().unregister(this);
         QsHelper.getInstance().getApplication().onActivityDestroy(this);
         QsHelper.getInstance().getScreenHelper().popActivity(this);
     }
 
-    @Override public P getPresenter() {
+    @Override
+    public P getPresenter() {
         if (presenter == null) {
             synchronized (this) {
                 if (presenter == null) {
@@ -135,84 +140,104 @@ public abstract class QsABActivity<P extends QsPresenter> extends AppCompatActiv
         return presenter;
     }
 
-    @Override public void initDataWhenDelay() {
+    @Override
+    public void initDataWhenDelay() {
         if (!hasInitData && isDelayData()) {
             initData(getIntent().getExtras());
             hasInitData = true;
         }
     }
 
-    @Override public void onViewClick(View view) {
+    @Override
+    public void onViewClick(View view) {
 
     }
 
-    @Override public Context getContext() {
+    @Override
+    public Context getContext() {
         return this;
     }
 
-    @Override public boolean isOpenEventBus() {
+    @Override
+    public boolean isOpenEventBus() {
         return false;
     }
 
-    @Override public boolean isOpenViewState() {
+    @Override
+    public boolean isOpenViewState() {
         return false;
     }
 
-    @Override public boolean isDelayData() {
+    @Override
+    public boolean isDelayData() {
         return false;
     }
 
-    @Override public void activityFinish() {
+    @Override
+    public void activityFinish() {
         activityFinish(false);
     }
 
-    @Override public void activityFinish(int enterAnim, int exitAnim) {
+    @Override
+    public void activityFinish(int enterAnim, int exitAnim) {
         activityFinish();
         overridePendingTransition(enterAnim, exitAnim);
     }
 
-    @Override public void activityFinish(boolean finishAfterTransition) {
+    @Override
+    public void activityFinish(boolean finishAfterTransition) {
         if (finishAfterTransition) ActivityCompat.finishAfterTransition(this);
         else finish();
     }
 
-    @Override public int loadingLayoutId() {
+    @Override
+    public int loadingLayoutId() {
         return QsHelper.getInstance().getApplication().loadingLayoutId();
     }
 
-    @Override public int emptyLayoutId() {
+    @Override
+    public int emptyLayoutId() {
         return QsHelper.getInstance().getApplication().emptyLayoutId();
     }
 
-    @Override public int errorLayoutId() {
+    @Override
+    public int errorLayoutId() {
         return QsHelper.getInstance().getApplication().errorLayoutId();
     }
 
-    @Override public QsProgressDialog getLoadingDialog() {
+    @Override
+    public QsProgressDialog getLoadingDialog() {
         return QsHelper.getInstance().getApplication().getLoadingDialog();
     }
 
-    @Override public void loading() {
+    @Override
+    public void loading() {
         loading(true);
     }
 
-    @Override public void loading(boolean cancelAble) {
+    @Override
+    public void loading(boolean cancelAble) {
         loading(getString(R.string.loading), cancelAble);
     }
 
-    @Override public void loading(int resId) {
+    @Override
+    public void loading(int resId) {
         loading(resId, true);
     }
 
-    @Override public void loading(int resId, boolean cancelAble) {
+    @Override
+    public void loading(int resId, boolean cancelAble) {
         loading(QsHelper.getInstance().getString(resId), cancelAble);
     }
 
-    @Override public void loading(String message) {
+    @Override
+    public void loading(String message) {
         loading(message, true);
     }
 
-    @ThreadPoint(ThreadType.MAIN) @Override public void loading(String message, boolean cancelAble) {
+    @ThreadPoint(ThreadType.MAIN)
+    @Override
+    public void loading(String message, boolean cancelAble) {
         if (mProgressDialog == null) mProgressDialog = getLoadingDialog();
         if (mProgressDialog != null) {
             mProgressDialog.setMessage(message);
@@ -225,58 +250,73 @@ public abstract class QsABActivity<P extends QsPresenter> extends AppCompatActiv
         }
     }
 
-    @ThreadPoint(ThreadType.MAIN) @Override public void loadingClose() {
-        if (mProgressDialog != null && mProgressDialog.isAdded()) mProgressDialog.dismissAllowingStateLoss();
+    @ThreadPoint(ThreadType.MAIN)
+    @Override
+    public void loadingClose() {
+        if (mProgressDialog != null && mProgressDialog.isAdded())
+            mProgressDialog.dismissAllowingStateLoss();
     }
 
-    @Override public void showLoadingView() {
+    @Override
+    public void showLoadingView() {
         setViewState(QsConstants.VIEW_STATE_LOADING);
     }
 
-    @Override public void showContentView() {
+    @Override
+    public void showContentView() {
         setViewState(QsConstants.VIEW_STATE_CONTENT);
     }
 
-    @Override public void showEmptyView() {
+    @Override
+    public void showEmptyView() {
         setViewState(QsConstants.VIEW_STATE_EMPTY);
     }
 
-    @Override public void showErrorView() {
+    @Override
+    public void showErrorView() {
         setViewState(QsConstants.VIEW_STATE_ERROR);
     }
 
-    @Override public int currentViewState() {
+    @Override
+    public int currentViewState() {
         if (isOpenViewState() && mViewAnimator != null) {
             return mViewAnimator.getDisplayedChild();
         }
         return -1;
     }
 
-    @Override public void intent2Activity(Class clazz) {
+    @Override
+    public void intent2Activity(Class clazz) {
         intent2Activity(clazz, null, 0, null, 0, 0);
     }
 
-    @Override public void intent2Activity(Class clazz, int requestCode) {
+    @Override
+    public void intent2Activity(Class clazz, int requestCode) {
         intent2Activity(clazz, null, requestCode, null, 0, 0);
     }
 
-    @Override public void intent2Activity(Class clazz, Bundle bundle) {
+    @Override
+    public void intent2Activity(Class clazz, Bundle bundle) {
         intent2Activity(clazz, bundle, 0, null, 0, 0);
     }
 
-    @Override public void intent2Activity(Class clazz, Bundle bundle, int inAnimId, int outAnimId) {
+    @Override
+    public void intent2Activity(Class clazz, Bundle bundle, int inAnimId, int outAnimId) {
         intent2Activity(clazz, bundle, 0, null, inAnimId, outAnimId);
     }
 
-    @Override public void intent2Activity(Class clazz, Bundle bundle, ActivityOptionsCompat optionsCompat) {
+    @Override
+    public void intent2Activity(Class clazz, Bundle bundle, ActivityOptionsCompat optionsCompat) {
         intent2Activity(clazz, bundle, 0, optionsCompat, 0, 0);
     }
 
-    @Override public void intent2Activity(Class clazz, Bundle bundle, int requestCode, ActivityOptionsCompat optionsCompat) {
+    @Override
+    public void intent2Activity(Class clazz, Bundle bundle, int requestCode, ActivityOptionsCompat optionsCompat) {
         intent2Activity(clazz, bundle, requestCode, optionsCompat, 0, 0);
     }
 
-    @Override public void intent2Activity(Class clazz, Bundle bundle, int requestCode, ActivityOptionsCompat optionsCompat, int inAnimId, int outAnimId) {
+    @Override
+    public void intent2Activity(Class clazz, Bundle bundle, int requestCode, ActivityOptionsCompat optionsCompat, int inAnimId, int outAnimId) {
         if (clazz != null) {
             Intent intent = new Intent();
             intent.setClass(this, clazz);
@@ -284,10 +324,12 @@ public abstract class QsABActivity<P extends QsPresenter> extends AppCompatActiv
             if (optionsCompat == null) {
                 if (requestCode > 0) {
                     startActivityForResult(intent, requestCode);
-                    if (inAnimId > 0 || outAnimId > 0) overridePendingTransition(inAnimId, outAnimId);
+                    if (inAnimId > 0 || outAnimId > 0)
+                        overridePendingTransition(inAnimId, outAnimId);
                 } else {
                     startActivity(intent);
-                    if (inAnimId > 0 || outAnimId > 0) overridePendingTransition(inAnimId, outAnimId);
+                    if (inAnimId > 0 || outAnimId > 0)
+                        overridePendingTransition(inAnimId, outAnimId);
                 }
             } else {
                 if (requestCode > 0) {
@@ -299,67 +341,83 @@ public abstract class QsABActivity<P extends QsPresenter> extends AppCompatActiv
         }
     }
 
-    @Override public void commitFragment(Fragment fragment) {
+    @Override
+    public void commitFragment(Fragment fragment) {
         commitFragment(fragment, fragment.getClass().getSimpleName());
     }
 
-    @Override public void commitFragment(Fragment fragment, String tag) {
+    @Override
+    public void commitFragment(Fragment fragment, String tag) {
         commitFragment(android.R.id.custom, fragment, tag);
     }
 
-    @Override public void commitFragment(int layoutId, Fragment fragment) {
+    @Override
+    public void commitFragment(int layoutId, Fragment fragment) {
         commitFragment(layoutId, fragment, fragment.getClass().getSimpleName());
     }
 
-    @Override public void commitFragment(int layoutId, Fragment fragment, String tag) {
+    @Override
+    public void commitFragment(int layoutId, Fragment fragment, String tag) {
         QsHelper.getInstance().commitFragment(getSupportFragmentManager(), layoutId, fragment, tag);
     }
 
-    @Override public void commitFragment(Fragment old, Fragment fragment) {
+    @Override
+    public void commitFragment(Fragment old, Fragment fragment) {
         commitFragment(old, fragment, fragment.getClass().getSimpleName());
     }
 
-    @Override public void commitFragment(Fragment old, Fragment fragment, String tag) {
+    @Override
+    public void commitFragment(Fragment old, Fragment fragment, String tag) {
         commitFragment(old, android.R.id.custom, fragment, tag);
     }
 
-    @Override public void commitFragment(Fragment old, int layoutId, Fragment fragment) {
+    @Override
+    public void commitFragment(Fragment old, int layoutId, Fragment fragment) {
         commitFragment(old, layoutId, fragment, fragment.getClass().getSimpleName());
     }
 
-    @Override public void commitFragment(Fragment old, int layoutId, Fragment fragment, String tag) {
+    @Override
+    public void commitFragment(Fragment old, int layoutId, Fragment fragment, String tag) {
         QsHelper.getInstance().commitFragment(getSupportFragmentManager(), old, layoutId, fragment, tag);
     }
 
-    @Override public void commitBackStackFragment(Fragment fragment) {
+    @Override
+    public void commitBackStackFragment(Fragment fragment) {
         commitBackStackFragment(fragment, fragment.getClass().getSimpleName());
     }
 
-    @Override public void commitBackStackFragment(Fragment fragment, String tag) {
+    @Override
+    public void commitBackStackFragment(Fragment fragment, String tag) {
         commitBackStackFragment(android.R.id.custom, fragment, tag);
     }
 
-    @Override public void commitBackStackFragment(int layoutId, Fragment fragment) {
+    @Override
+    public void commitBackStackFragment(int layoutId, Fragment fragment) {
         commitBackStackFragment(layoutId, fragment, fragment.getClass().getSimpleName());
     }
 
-    @Override public void commitBackStackFragment(Fragment fragment, int enterAnim, int exitAnim) {
+    @Override
+    public void commitBackStackFragment(Fragment fragment, int enterAnim, int exitAnim) {
         QsHelper.getInstance().commitBackStackFragment(fragment, enterAnim, exitAnim);
     }
 
-    @Override public void commitBackStackFragment(int layoutId, Fragment fragment, String tag) {
+    @Override
+    public void commitBackStackFragment(int layoutId, Fragment fragment, String tag) {
         QsHelper.getInstance().commitBackStackFragment(getSupportFragmentManager(), layoutId, fragment, tag);
     }
 
-    @Override public void commitDialogFragment(DialogFragment fragment) {
+    @Override
+    public void commitDialogFragment(DialogFragment fragment) {
         QsHelper.getInstance().commitDialogFragment(getSupportFragmentManager(), fragment);
     }
 
-    @Override public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 //        PermissionUtils.getSupportFragmentManagerInstance().parsePermissionResultData(requestCode, permissions, grantResults, this);
     }
 
-    @ThreadPoint(ThreadType.MAIN) protected void setViewState(int showState) {
+    @ThreadPoint(ThreadType.MAIN)
+    protected void setViewState(int showState) {
         L.i(initTag(), "setViewState() showState=" + showState);
         if (!isOpenViewState()) {
             L.i(initTag(), "当前Activity没有打开状态模式! isOpenViewState() = false");
@@ -415,7 +473,7 @@ public abstract class QsABActivity<P extends QsPresenter> extends AppCompatActiv
     protected View initView() {
         View rootView;
         Toolbar mToolbar;
-        if (isOpenViewState() && loadingLayoutId() > 0 && emptyLayoutId() > 0 && errorLayoutId() > 0 ) {
+        if (isOpenViewState() && loadingLayoutId() > 0 && emptyLayoutId() > 0 && errorLayoutId() > 0) {
             rootView = View.inflate(this, rootViewLayoutId(), null);
             mViewAnimator = rootView.findViewById(android.R.id.home);
             mToolbar = rootView.findViewById(R.id.toolbar);
@@ -452,7 +510,9 @@ public abstract class QsABActivity<P extends QsPresenter> extends AppCompatActiv
         }
     }
 
-    @ThreadPoint(ThreadType.MAIN) @Override public void onBackPressed() {
+    @ThreadPoint(ThreadType.MAIN)
+    @Override
+    public void onBackPressed() {
         super.onBackPressed();
     }
 
@@ -462,7 +522,8 @@ public abstract class QsABActivity<P extends QsPresenter> extends AppCompatActiv
      * 2，将onKeyDown事件传递到当前展示的Fragment
      * 3，重写onKeyDown处理
      */
-    @Override public final boolean onKeyDown(int keyCode, KeyEvent event) {
+    @Override
+    public final boolean onKeyDown(int keyCode, KeyEvent event) {
         if (onKeyDownListener != null && onKeyDownListener.onKeyDown(keyCode, event)) return true;
         @SuppressLint("RestrictedApi") List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
         if (fragmentList != null && !fragmentList.isEmpty()) {
@@ -483,10 +544,10 @@ public abstract class QsABActivity<P extends QsPresenter> extends AppCompatActiv
         return onKeyDown(event, keyCode);
     }
 
-    @Override public boolean onKeyDown(KeyEvent event, int keyCode) {
+    @Override
+    public boolean onKeyDown(KeyEvent event, int keyCode) {
         return super.onKeyDown(keyCode, event);
     }
-
 
 
     private void setDefaultViewClickListener(View view) {
@@ -496,7 +557,8 @@ public abstract class QsABActivity<P extends QsPresenter> extends AppCompatActiv
                 if (isShowBackButtonInDefaultView()) {
                     backView.setVisibility(View.VISIBLE);
                     backView.setOnClickListener(new View.OnClickListener() {
-                        @Override public void onClick(View v) {
+                        @Override
+                        public void onClick(View v) {
                             onBackPressed();
                         }
                     });
@@ -506,7 +568,8 @@ public abstract class QsABActivity<P extends QsPresenter> extends AppCompatActiv
             }
             View reloadView = view.findViewById(R.id.super_reload_in_default_view);
             if (reloadView != null) reloadView.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View v) {
+                @Override
+                public void onClick(View v) {
                     showLoadingView();
                     initData(getIntent().getExtras());
                 }
@@ -514,29 +577,30 @@ public abstract class QsABActivity<P extends QsPresenter> extends AppCompatActiv
         }
     }
 
-    @Override public void setOnKeyDownListener(OnKeyDownListener listener) {
+    @Override
+    public void setOnKeyDownListener(OnKeyDownListener listener) {
         this.onKeyDownListener = listener;
     }
 
-    @Override public boolean isShowBackButtonInDefaultView() {
+    @Override
+    public boolean isShowBackButtonInDefaultView() {
         return false;
     }
 
-    @Override public boolean isTransparentStatusBar() {
+    @Override
+    public boolean isTransparentStatusBar() {
         return false;
     }
 
-    @Override public boolean isBlackIconStatusBar() {
+    @Override
+    public boolean isBlackIconStatusBar() {
         return false;
     }
 
-    @Override public boolean isTransparentNavigationBar() {
+    @Override
+    public boolean isTransparentNavigationBar() {
         return false;
     }
-
-
-
-
 
 
 }

@@ -1,7 +1,9 @@
 package com.supermax.base;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Application;
+import android.content.Context;
 import android.support.annotation.LayoutRes;
 
 import com.supermax.base.common.dialog.QsProgressDialog;
@@ -46,6 +48,27 @@ public abstract class QsApplication extends Application {
     }
 
     public void onActivityDestroy(Activity activity) {
+    }
+
+    public boolean isMainProcess() {
+        return getPackageName().equals(getCurrentProcessName());
+    }
+
+    /**
+     * 获取当前进程名
+     */
+    public String getCurrentProcessName() {
+        int pid = android.os.Process.myPid();
+        String processName = "";
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        if (manager == null) return processName;
+        for (ActivityManager.RunningAppProcessInfo process : manager.getRunningAppProcesses()) {
+            if (process.pid == pid) {
+                processName = process.processName;
+                break;
+            }
+        }
+        return processName;
     }
 
     /**
