@@ -32,7 +32,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.io.Closeable;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/12 16:56
  * @Description

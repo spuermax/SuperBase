@@ -36,14 +36,13 @@ import dalvik.system.DexFile;
  * 1，View层控件绑定
  * 2，控件点击事件
  * 3，Bundle值寻找
+ *
+ * LruCache  最近最少使用算法
+ *
  */
 public class ViewBindHelper {
 
     private static LruCache<Class<?>, ViewBindData> viewCache = new LruCache<>(200);
-
-    private Object mTarget;
-    private Map<Field, Bind> viewFieldMap;
-    private Map<Field, BindBundle> bundleFieldMap;
 
 
     /**
