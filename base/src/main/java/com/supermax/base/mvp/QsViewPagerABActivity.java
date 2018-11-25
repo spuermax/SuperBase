@@ -18,7 +18,7 @@ import com.supermax.base.mvp.fragment.QsIFragment;
 import com.supermax.base.mvp.model.QsModelPager;
 import com.supermax.base.mvp.presenter.QsPresenter;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/14 14:40
  * @Description

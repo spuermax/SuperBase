@@ -16,7 +16,7 @@ import com.supermax.base.common.widget.ptr.PtrUIHandler;
 import com.supermax.base.common.widget.ptr.header.BeautyCircleRefreshHeader;
 import com.supermax.base.mvp.presenter.QsPresenter;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/18 11:03
  * @Description
