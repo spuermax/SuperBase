@@ -56,7 +56,7 @@ public class HeaderFooterRecyclerAdapter extends RecyclerView.Adapter {
             case HEADER_VIEW_TYPE:
                 return new HeaderOrFooterView(headerView.get(0));
             case FOOTER_VIEW_TYPE:
-                return new HeaderOrFooterView(headerView.get(0));
+                return new HeaderOrFooterView(footerView.get(0));
             default:
                 return tagAdapter.onCreateViewHolder(viewGroup, viewType);
 
