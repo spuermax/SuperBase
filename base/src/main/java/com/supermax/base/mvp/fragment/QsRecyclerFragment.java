@@ -25,7 +25,7 @@ import com.supermax.base.mvp.presenter.QsPresenter;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/15 15:09
  * @Description

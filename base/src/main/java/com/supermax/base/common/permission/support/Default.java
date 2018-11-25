@@ -6,13 +6,11 @@ import android.net.Uri;
 import android.provider.Settings;
 
 import com.supermax.base.common.permission.inter.ISetting;
-
-
 /**
- * Created by mq on 2018/3/8 下午3:50
- * mqcoder90@gmail.com
+ * @Author yinzh
+ * @Date   2018/5/25 15:04
+ * @Description
  */
-
 public class Default implements ISetting {
 
     private Context context;

@@ -3,7 +3,7 @@ package com.supermax.base.common.log;
 import android.text.TextUtils;
 import android.util.Log;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/13 09:34
  * @Description

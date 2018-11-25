@@ -18,12 +18,12 @@ import com.supermax.base.mvp.fragment.QsIFragment;
 import com.supermax.base.mvp.model.QsModelPager;
 import com.supermax.base.mvp.presenter.QsPresenter;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/14 09:44
  * @Description
  */
-public abstract class QsViewPagerActivity<P extends QsPresenter> extends QsActivity implements QsIViewPagerActivity {
+public abstract class QsViewPagerActivity<P extends QsPresenter> extends QsActivity<P> implements QsIViewPagerActivity {
 
     private QsViewPagerAdapter   adapter;
     private QsViewPager          pager;

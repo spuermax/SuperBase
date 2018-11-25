@@ -35,7 +35,7 @@ import com.supermax.base.mvp.presenter.QsPresenter;
 
 import org.greenrobot.eventbus.EventBus;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/15 14:40
  * @Description

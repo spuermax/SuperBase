@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/18 09:39
  * @Description  A LinearLayout, its onSizeChanged() in mSizeChangedListener will be called When sizeChanged.

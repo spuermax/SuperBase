@@ -7,7 +7,7 @@ import com.supermax.base.common.log.L;
 import java.util.ArrayList;
 import java.util.Stack;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/13 09:32
  * @Description 屏幕管理帮助类

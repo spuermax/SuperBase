@@ -20,7 +20,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/18 16:22
  * @Description: 权限切面

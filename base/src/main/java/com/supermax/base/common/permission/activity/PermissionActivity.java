@@ -15,7 +15,7 @@ import com.supermax.base.common.permission.utils.PermissionUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/18 16:26
  * @Description

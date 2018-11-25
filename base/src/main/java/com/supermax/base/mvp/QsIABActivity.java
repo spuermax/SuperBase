@@ -1,6 +1,6 @@
 package com.supermax.base.mvp;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/14 09:32
  * @Description

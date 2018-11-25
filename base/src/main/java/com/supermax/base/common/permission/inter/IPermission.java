@@ -2,7 +2,7 @@ package com.supermax.base.common.permission.inter;
 
 import java.util.List;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/5/25 15:04
  * @Description

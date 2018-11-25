@@ -4,7 +4,7 @@ import android.view.View;
 
 import com.supermax.base.common.widget.viewpager.headerpager.base.OuterScroller;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/14 09:56
  * @Description

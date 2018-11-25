@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import com.supermax.base.common.utils.QsHelper;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/17 13:30
  * @Description

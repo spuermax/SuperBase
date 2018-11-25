@@ -6,7 +6,7 @@ import android.view.WindowManager;
 import com.supermax.base.common.log.L;
 import com.supermax.base.common.widget.dialog.QsDialogFragment;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/15 14:41
  * @Description

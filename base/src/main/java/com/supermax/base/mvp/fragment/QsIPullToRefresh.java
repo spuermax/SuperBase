@@ -4,7 +4,7 @@ import com.supermax.base.common.widget.listview.LoadingFooter;
 import com.supermax.base.common.widget.ptr.PtrFrameLayout;
 import com.supermax.base.common.widget.ptr.PtrUIHandler;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/15 13:29
  * @Description

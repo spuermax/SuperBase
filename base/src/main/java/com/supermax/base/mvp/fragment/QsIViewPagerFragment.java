@@ -8,7 +8,7 @@ import com.supermax.base.common.widget.viewpager.QsViewPager;
 import com.supermax.base.mvp.adapter.QsViewPagerAdapter;
 import com.supermax.base.mvp.model.QsModelPager;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/15 14:09
  * @Description

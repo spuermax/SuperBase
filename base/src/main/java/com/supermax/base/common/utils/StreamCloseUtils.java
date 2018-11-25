@@ -3,7 +3,7 @@ package com.supermax.base.common.utils;
 import java.io.Closeable;
 import java.io.IOException;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/17 09:22
  * @Description

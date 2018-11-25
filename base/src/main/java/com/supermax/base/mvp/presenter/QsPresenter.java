@@ -22,7 +22,7 @@ import com.supermax.base.mvp.model.QsConstants;
 
 import java.util.ArrayList;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/12 16:53
  * @Description

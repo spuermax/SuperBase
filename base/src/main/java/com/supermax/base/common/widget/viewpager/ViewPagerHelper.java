@@ -9,7 +9,7 @@ import com.supermax.base.mvp.fragment.QsIFragment;
 import com.supermax.base.mvp.fragment.QsIViewPagerFragment;
 import com.supermax.base.mvp.model.QsModelPager;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/16 16:49
  * @Description

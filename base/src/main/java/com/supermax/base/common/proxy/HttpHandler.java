@@ -6,7 +6,7 @@ import com.supermax.base.common.log.L;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/19 18:04
  * @Description

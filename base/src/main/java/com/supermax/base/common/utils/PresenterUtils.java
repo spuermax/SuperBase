@@ -9,7 +9,7 @@ import com.supermax.base.mvp.presenter.QsPresenter;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/16 14:46
  * @Description

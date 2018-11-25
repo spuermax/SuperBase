@@ -2,7 +2,7 @@ package com.supermax.base.common.threadpoll;
 
 import android.os.Process;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/16 15:34
  * @Description

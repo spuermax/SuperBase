@@ -13,7 +13,7 @@ import com.supermax.base.common.widget.viewpager.headerpager.help.MagicHeaderUti
 import com.supermax.base.mvp.model.QsModelPager;
 import com.supermax.base.mvp.presenter.QsPresenter;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/18 09:32
  * @Description

@@ -7,7 +7,7 @@ import com.supermax.base.common.utils.QsHelper;
 import com.supermax.base.common.widget.viewpager.PagerSlidingTabStrip;
 import com.supermax.base.common.widget.viewpager.ViewPagerHelper;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/17 10:05
  * @Description

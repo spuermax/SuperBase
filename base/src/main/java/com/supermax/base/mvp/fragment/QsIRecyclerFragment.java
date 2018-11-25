@@ -9,7 +9,7 @@ import com.supermax.base.mvp.adapter.QsRecycleAdapterItem;
 
 import java.util.List;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/14 14:59
  * @Description

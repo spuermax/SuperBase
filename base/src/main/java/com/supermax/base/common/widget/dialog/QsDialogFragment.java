@@ -16,7 +16,7 @@ import com.supermax.base.R;
 import com.supermax.base.common.utils.QsHelper;
 import com.supermax.base.common.viewbind.ViewBindHelper;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/15 14:42
  * @Description

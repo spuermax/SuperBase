@@ -1,6 +1,6 @@
 package com.supermax.base.common.permission.annotation;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/5/25 14:43
  * @Description

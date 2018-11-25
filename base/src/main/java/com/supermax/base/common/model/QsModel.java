@@ -1,6 +1,6 @@
 package com.supermax.base.common.model;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/16 16:24
  * @Description

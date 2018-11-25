@@ -24,7 +24,7 @@ import com.supermax.base.common.widget.viewpager.headerpager.base.SizeSensitiveL
 import com.supermax.base.common.widget.viewpager.headerpager.base.TranslatableLinearLayout;
 import com.supermax.base.common.widget.viewpager.headerpager.help.MagicHeaderUtils;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/18 09:35
  * @Description

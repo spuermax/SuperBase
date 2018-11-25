@@ -19,7 +19,7 @@ import com.supermax.base.common.widget.viewpager.ViewPagerHelper;
 import com.supermax.base.mvp.fragment.QsIFragment;
 import com.supermax.base.mvp.model.QsModelPager;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/14 09:51
  * @Description

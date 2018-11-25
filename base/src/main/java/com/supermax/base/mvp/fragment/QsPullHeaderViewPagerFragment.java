@@ -14,7 +14,7 @@ import com.supermax.base.common.widget.ptr.header.BeautyCircleRefreshHeader;
 import com.supermax.base.common.widget.viewpager.headerpager.HeaderViewPager;
 import com.supermax.base.mvp.presenter.QsPresenter;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/18 13:09
  * @Description

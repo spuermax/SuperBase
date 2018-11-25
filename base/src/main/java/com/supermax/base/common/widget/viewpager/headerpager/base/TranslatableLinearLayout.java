@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 
 import com.supermax.base.common.widget.viewpager.headerpager.HeaderViewPager;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/18 09:36
  * @Description

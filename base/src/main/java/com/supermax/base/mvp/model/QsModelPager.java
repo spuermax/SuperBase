@@ -2,7 +2,7 @@ package com.supermax.base.mvp.model;
 
 import android.support.v4.app.Fragment;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/14 09:42
  * @Description

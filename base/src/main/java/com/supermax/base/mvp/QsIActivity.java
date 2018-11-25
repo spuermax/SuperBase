@@ -4,7 +4,7 @@ import android.view.KeyEvent;
 
 import com.supermax.base.common.viewbind.OnKeyDownListener;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/12 16:51
  * @Description

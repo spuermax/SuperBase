@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import java.util.concurrent.ThreadFactory;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/16 15:32
  * @Description: create thread

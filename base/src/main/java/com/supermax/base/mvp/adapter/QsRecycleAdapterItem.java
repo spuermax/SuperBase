@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import com.supermax.base.common.utils.QsHelper;
 import com.supermax.base.common.viewbind.ViewBindHelper;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/17 10:18
  * @Description

@@ -3,8 +3,9 @@ package com.supermax.base.common.permission.inter;
 import android.content.Intent;
 
 /**
- * Created by mq on 2018/3/8 下午3:24
- * mqcoder90@gmail.com
+ * @Author yinzh
+ * @Date   2018/5/25 15:04
+ * @Description
  */
 
 public interface ISetting {

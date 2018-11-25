@@ -5,7 +5,7 @@ import android.os.Looper;
 import com.supermax.base.common.log.L;
 import com.supermax.base.mvp.model.QsConstants;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/16 15:24
  * @Description:线程池管理类

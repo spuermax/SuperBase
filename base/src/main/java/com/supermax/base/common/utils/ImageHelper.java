@@ -38,7 +38,7 @@ import com.supermax.base.common.utils.glide.transform.RoundCornersTransformation
 import java.io.File;
 import java.util.concurrent.ExecutionException;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/18 16:59
  * @Description :图片加载帮助类

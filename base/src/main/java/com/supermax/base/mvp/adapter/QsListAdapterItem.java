@@ -7,7 +7,7 @@ import com.supermax.base.common.utils.QsHelper;
 import com.supermax.base.common.viewbind.ViewBindData;
 import com.supermax.base.common.viewbind.ViewBindHelper;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/14 14:49
  * @Description: 适配器

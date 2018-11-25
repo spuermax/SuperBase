@@ -20,7 +20,7 @@ import com.supermax.base.mvp.presenter.QsPresenter;
 
 import java.util.List;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/18 11:22
  * @Description

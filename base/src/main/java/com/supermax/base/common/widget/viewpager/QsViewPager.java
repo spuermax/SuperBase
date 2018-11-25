@@ -5,7 +5,7 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/14 09:43
  * @Description

@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.supermax.base.common.widget.viewpager.headerpager.InnerScroller;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/14 09:54
  * @Description

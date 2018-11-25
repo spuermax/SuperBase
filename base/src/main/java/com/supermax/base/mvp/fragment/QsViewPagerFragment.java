@@ -19,7 +19,7 @@ import com.supermax.base.mvp.adapter.QsViewPagerAdapter;
 import com.supermax.base.mvp.model.QsModelPager;
 import com.supermax.base.mvp.presenter.QsPresenter;
 
-/*
+/**
  * @Author yinzh
  * @Date   2018/10/17 20:20
  * @Description

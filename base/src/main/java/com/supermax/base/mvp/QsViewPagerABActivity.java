@@ -23,7 +23,7 @@ import com.supermax.base.mvp.presenter.QsPresenter;
  * @Date   2018/10/14 14:40
  * @Description
  */
-public abstract class QsViewPagerABActivity <P extends QsPresenter> extends QsABActivity implements QsIViewPagerABActivity{
+public abstract class QsViewPagerABActivity <P extends QsPresenter> extends QsABActivity<P> implements QsIViewPagerABActivity{
     private QsViewPagerAdapter   adapter;
     private QsViewPager          pager;
     private PagerSlidingTabStrip tabs;
