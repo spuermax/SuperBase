@@ -65,21 +65,30 @@ public class ScreenHelper {
         }
 
         if(fragmentActivities.size() <= 0){
-//            QsHelper.getInstance().getImageHelper().clearMemoryCache();
-//            QsHelper.getInstance().getThreadHelper().shutdown();
+            QsHelper.getInstance().getImageHelper().clearMemoryCache();
+            QsHelper.getInstance().getThreadHelper().shutdown();
             if (listeners != null) listeners.clear();
         }
     }
 
     /**
-     * 退出堆栈中所有Activity, 当前的Activity除外
+     * 从栈顶向下 pop activity  直到当前Activity
+     * 若如入参不为空而该栈中没有该Activity 则pop时留栈底一个Activity
      */
     public void popAllActivityExceptMain(Class clazz) {
         while (true) {
+            if(clazz != null && fragmentActivities.size() <= 1)break;
             FragmentActivity activity = currentActivity();
             if (activity == null) break;
             if (activity.getClass().equals(clazz)) break;
             popActivity(activity);
+        }
+    }
+
+    public void popAllActivity(){
+        while (fragmentActivities.size() > 0) {
+            FragmentActivity fragmentActivity = fragmentActivities.get(0);
+            popActivity(fragmentActivity);
         }
     }
 

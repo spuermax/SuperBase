@@ -13,7 +13,8 @@ import java.lang.reflect.Type;
  * @Author yinzh
  * @Date   2018/10/16 14:46
  * @Description
- */public class PresenterUtils {
+ */
+public class PresenterUtils {
 
     public static <P extends QsPresenter, V extends QsIView> P createPresenter(V iView) {
         Class<? extends QsIView> viewClass = iView.getClass();
