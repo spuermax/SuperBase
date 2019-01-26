@@ -41,7 +41,7 @@ import okhttp3.ResponseBody;
 
 /**
  * @Author yinzh
- * @Date   2018/10/19 17:44
+ * @Date 2018/10/19 17:44
  * @Description
  */
 public class HttpAdapter {
@@ -171,8 +171,8 @@ public class HttpAdapter {
         checkParamsAnnotation(annotations, args, method.getName(), requestTag);
 
         HttpBuilder httpBuilder = getHttpBuilder(requestTag, path, args, requestType);
-
-        StringBuilder url = getUrl(TextUtils.isEmpty(terminal) ? httpBuilder.getTerminal() : terminal, path, method, args, requestTag);
+        if (!TextUtils.isEmpty(terminal)) httpBuilder.setTerminal(terminal);
+        StringBuilder url = getUrl(httpBuilder.getTerminal(), path, method, args, requestTag);
 
         if (TextUtils.isEmpty(url))
             throw new QsException(QsExceptionType.UNEXPECTED, requestTag, "url error... method:" + method.getName() + "  request url is null...");
@@ -180,12 +180,11 @@ public class HttpAdapter {
         RequestBody requestBody = null;
         Object body = null;
         Object formBody = null;
-        HashMap<String, Object> params = null;
+        HashMap<String, String> params = null;
         String mimeType = null;
 
         if (httpBuilder.getUrlParameters() != null && !httpBuilder.getUrlParameters().isEmpty()) {
-            params = new HashMap<>();
-            params.putAll(httpBuilder.getUrlParameters());
+            params = new HashMap<>(httpBuilder.getUrlParameters());
         }
         for (int i = 0; i < annotations.length; i++) {
             Annotation[] annotationArr = annotations[i];
@@ -198,11 +197,10 @@ public class HttpAdapter {
                 break;
 
             } else if (annotation instanceof Query) {
-                if (params == null) params = new HashMap<>();
                 Object arg = args[i];
+                if (params == null) params = new HashMap<>();
                 String key = ((Query) annotation).value();
-                params.put(key, arg);
-
+                params.put(key, arg == null ? "" : String.valueOf(arg));
             } else if (annotation instanceof FormBody) {
                 formBody = args[i];
             }
@@ -257,30 +255,42 @@ public class HttpAdapter {
 
 
     private Object createResult(Method method, Response response, Object requestTag) throws IOException {
-        Class<?> returnType = method.getReturnType();
-        if (returnType == void.class || response == null) return null;
+        if (response == null) return null;
         int responseCode = response.code();
+        HttpResponse httpResponse = new HttpResponse();
+        httpResponse.response = response;
 
-        QsHelper.getInstance().getApplication().onCommonHttpResponse(response);
-
-        if (responseCode < 200 || responseCode >= 300) {
+        if (responseCode >= 200 && responseCode < 300) {
+            Class<?> returnType = method.getReturnType();
+            if (returnType == void.class) {
+                QsHelper.getInstance().getApplication().onCommonHttpResponse(httpResponse);
+                response.close();
+                return null;
+            } else if (returnType.equals(Response.class)) {
+                QsHelper.getInstance().getApplication().onCommonHttpResponse(httpResponse);
+                return response;
+            } else {
+                ResponseBody body = response.body();
+                if (body == null) {
+                    throw new QsException(QsExceptionType.HTTP_ERROR, requestTag, "http response error... method:" + method.getName() + "  response body is null!!");
+                }
+                QsHelper.getInstance().getApplication().onCommonHttpResponse(httpResponse);
+                String jsonStr = httpResponse.getJsonString();
+                response.close();
+                if (QsHelper.getInstance().getApplication().isLogOpen()) {
+                    L.i(TAG, "methodName:" + method.getName() + "  响应体 Json:\n" + converter.formatJson(jsonStr));
+                }
+                if (!TextUtils.isEmpty(jsonStr)) {
+                    return converter.jsonToObject(jsonStr, returnType);
+                }
+            }
+        } else {
+            QsHelper.getInstance().getApplication().onCommonHttpResponse(httpResponse);
             response.close();
             throw new QsException(QsExceptionType.HTTP_ERROR, requestTag, "http error... method:" + method.getName() + "  http response code = " + responseCode);
         }
-
-        if (returnType.equals(Response.class)) {
-            return response;
-        }
-        ResponseBody body = response.body();
-        if (body == null) {
-            response.close();
-            throw new QsException(QsExceptionType.HTTP_ERROR, requestTag, "http response error... method:" + method.getName() + "  response body is null!!");
-        }
-        Object result = converter.jsonFromBody(body, returnType, method.getName(), requestTag);
-        response.close();
-        return result;
+        return null;
     }
-
 
 
     public void cancelRequest(Object requestTag) {

@@ -8,12 +8,10 @@ import android.support.annotation.LayoutRes;
 
 import com.supermax.base.common.dialog.QsProgressDialog;
 import com.supermax.base.common.http.HttpBuilder;
+import com.supermax.base.common.http.HttpResponse;
 import com.supermax.base.common.log.L;
 import com.supermax.base.common.utils.ImageHelper;
 import com.supermax.base.common.utils.QsHelper;
-
-import okhttp3.Response;
-
 /**
  * @Author yinzh
  * @Date   2018/10/12 16:32
@@ -93,7 +91,7 @@ public abstract class QsApplication extends Application {
     public void onCommonLoadImage(ImageHelper.Builder builder) {
     }
 
-    public void onCommonHttpResponse(Response response) {
+    public void onCommonHttpResponse(HttpResponse response) {
     }
 
 }

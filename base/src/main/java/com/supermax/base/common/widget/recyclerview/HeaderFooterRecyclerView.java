@@ -3,9 +3,11 @@ package com.supermax.base.common.widget.recyclerview;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.Interpolator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,7 @@ public class HeaderFooterRecyclerView extends RecyclerView{
     private List<View> mHeaderViews = new ArrayList<>();
     private List<View> mFooterViews = new ArrayList<>();
     private HeaderFooterRecyclerAdapter mAdapter;
+    private RecyclerView recyclerView;
 
     public HeaderFooterRecyclerView(@NonNull Context context) {
         super(context);
