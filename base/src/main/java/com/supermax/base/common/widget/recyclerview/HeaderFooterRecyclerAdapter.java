@@ -19,7 +19,6 @@ public class HeaderFooterRecyclerAdapter extends RecyclerView.Adapter {
     private List<View> headerView;
     private List<View> footerView;
     private RecyclerView.Adapter tagAdapter;
-    private RecyclerView recyclerView;
 
 
     //定义FooterView类型 和 HeaderView类型
@@ -38,7 +37,6 @@ public class HeaderFooterRecyclerAdapter extends RecyclerView.Adapter {
      */
     @Override
     public int getItemViewType(int position) {
-        recyclerView.setAdapter();
         int headerNum = headerView.size();
         if (position < headerNum) {
             return HEADER_VIEW_TYPE;
