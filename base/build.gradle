@@ -24,45 +24,6 @@ android {
         }
     }
 
-    lintOptions {
-        quiet true
-        abortOnError false
-    }
-
-    // 打包源码jar
-    task sourcesJar(type: Jar) {
-        from android.sourceSets.main.java.srcDirs
-        classifier = 'sources'
-    }
-
-    //编译groovy代码时采用 UTF-8
-    tasks.withType(GroovyCompile) {
-        groovyOptions.encoding = "MacRoman"
-    }
-
-    //编译JAVA文件时采用UTF-8
-    tasks.withType(JavaCompile) {
-        options.encoding = "UTF-8"
-    }
-
-    task javadoc(type: Javadoc) {
-        failOnError false
-        source = android.sourceSets.main.java.sourceFiles
-        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-        classpath += configurations.compile
-    }
-
-    // 打包文档jar
-    task javadocJar(type: Jar, dependsOn: javadoc) {
-        classifier = 'javadoc'
-        from javadoc.destinationDir
-    }
-
-    artifacts {
-        archives sourcesJar
-        archives javadocJar
-    }
-
 
 }
 
@@ -82,14 +43,4 @@ dependencies {
     implementation 'org.aspectj:aspectjrt:1.9.1'
     api 'com.squareup.okhttp3:okhttp:3.10.0'
     api 'com.google.code.gson:gson:2.8.2'
-}
-
-uploadArchives {
-    repositories.mavenDeployer {
-        def deployPath = file(getProperty('aar.deployPath'))
-        repository(url: "file://${deployPath.absolutePath}")
-        pom.groupId = "com.supermax.base"
-        pom.artifactId = "SuperBase"
-        pom.version = "9.9.9"
-    }
 }
