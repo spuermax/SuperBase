@@ -70,7 +70,7 @@ public interface InnerScroller {
     void scrollToInnerTop();
 
     /**
-     * Add inner header view
+     * Add InnerListView header view
      */
     void addHeaderView(View headerView);
 

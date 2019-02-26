@@ -683,7 +683,7 @@ public class HeaderViewPager extends FrameLayout implements OuterScroller{
         InnerScroller currentScroller = getCurrentInnerScroller();
         if (currentScroller != null
                 // v3.2.3.2: add this judgement to fix bug that:
-                // in header-always-scroll-with-inner mode, switching tabs in some special sequence,
+                // in header-always-scroll-with-InnerListView mode, switching tabs in some special sequence,
                 // may causes innerScroller using another one's scrollYIn.
                 && currentItem == mViewPager.getCurrentItem()) {
             int scrollY = currentScroller.getInnerScrollY();
