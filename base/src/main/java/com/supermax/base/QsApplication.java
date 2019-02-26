@@ -28,6 +28,15 @@ public abstract class QsApplication extends Application {
 
     public abstract boolean isLogOpen();
 
+    /**
+     * @param builder http请求参数封装
+     *                {@link HttpBuilder#setTerminal(String)}设置主机地址
+     *                {@link HttpBuilder#getPath()}获取路径
+     *                {@link HttpBuilder#getHeaderBuilder()} ()}获取header
+     *                {@link HttpBuilder#getTerminal()} ()}获取主机地址
+     *                {@link HttpBuilder#getUrlParameters()} ()}获取url参数
+     *                {@link HttpBuilder#getRequestTag()} ()} ()}获取请求tag
+     */
     public abstract void initHttpAdapter(HttpBuilder builder);
 
     public void onActivityCreate(Activity activity) {

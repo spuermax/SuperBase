@@ -11,26 +11,32 @@ import okhttp3.Headers;
 
 /**
  * @Author yinzh
- * @Date   2018/10/19 17:48
+ * @Date 2018/10/19 17:48
  * @Description
  */
 public class HttpBuilder {
 
-    private final Object                  requestTag;
-    private final String                  path;
-    private final Object[]                args;
-    private final String                  requestType;
-    private       String                  terminal;
-    private HashMap<String, String> urlParameters;
+    private final Object requestTag;
+    private String terminal;
+    private final String path;
+    private final Object[] args;
+    private final String requestType;
+    private Object body;
+    private Object formBody;
+    private HashMap<String, String> paramsMap;
 
     private Headers.Builder headerBuilder = new Headers.Builder();
 
 
-    HttpBuilder(Object requestTag, String path, Object[] args, String requestType) {
+    HttpBuilder(Object requestTag, String terminal, String path, Object[] args, String requestType, Object body, Object formBody, HashMap<String, String> paramsMap) {
         this.requestTag = requestTag;
+        this.terminal = terminal;
         this.path = path;
         this.args = args;
         this.requestType = requestType;
+        this.body = body;
+        this.formBody = formBody;
+        this.paramsMap = paramsMap;
     }
 
     public HttpBuilder addHeader(String key, String value) {
@@ -62,18 +68,23 @@ public class HttpBuilder {
 
     public HttpBuilder addUrlParameters(String key, String value) {
         if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(value)) {
-            if (urlParameters == null) {
-                synchronized (HttpBuilder.class) {
-                    if (urlParameters == null) urlParameters = new HashMap<>();
-                }
-            }
-            urlParameters.put(key, value);
+            if (paramsMap == null) paramsMap = new HashMap<>();
+            paramsMap.put(key, value == null ? "" : value);
         }
         return this;
     }
 
-    HashMap<String, String> getUrlParameters() {
-        return urlParameters;
+    public HttpBuilder setUrlParameters(HashMap<String, String> parametersr) {
+        if (paramsMap == null) {
+            paramsMap = new HashMap<>();
+        } else {
+            paramsMap.putAll(parametersr);
+        }
+        return this;
+    }
+
+    public HashMap<String, String> getUrlParameters() {
+        return paramsMap;
     }
 
     public String getPath() {
@@ -90,6 +101,24 @@ public class HttpBuilder {
 
     public String getRequestType() {
         return requestType;
+    }
+
+    public Object getBody() {
+        return body;
+    }
+
+    public Object getFormBody() {
+        return formBody;
+    }
+
+    public HttpBuilder setBody(Object body) {
+        this.body = body;
+        return this;
+    }
+
+    public HttpBuilder setFormBody(Object formBody) {
+        this.formBody = formBody;
+        return this;
     }
 
 }

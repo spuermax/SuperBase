@@ -10,6 +10,9 @@ import com.supermax.base.common.exception.QsExceptionType;
 import com.supermax.base.common.log.L;
 import com.supermax.base.common.utils.StreamCloseUtils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -66,7 +69,7 @@ public class HttpConverter {
     }
 
 
-    RequestBody stringToFormBody(String methodName, Object formBody) {
+    RequestBody stringToFormBody(String methodName, Object formBody) throws JSONException {
         L.i(TAG, "methodName:" + methodName + "  提交表单:" + formBody.getClass().getSimpleName());
         FormBody.Builder builder = new FormBody.Builder();
         if (formBody instanceof Map) {
@@ -78,16 +81,15 @@ public class HttpConverter {
                     builder.add(keyStr, valueStr);
             }
         } else if (formBody instanceof String) {
-            String formStr = (String) formBody;
-            String[] paramArr = formStr.split("&");
-            for (String param : paramArr) {
-                if (!TextUtils.isEmpty(param)) {
-                    String[] keyValue = param.split("=");
-                    if (keyValue.length == 2 && !TextUtils.isEmpty(keyValue[0]) && !TextUtils.isEmpty(keyValue[1])) {
-                        builder.add(keyValue[0], keyValue[1]);
-                    }
+            JSONObject jsonObject = new JSONObject((String) formBody);
+            while (jsonObject.keys().hasNext()) {
+                String key = jsonObject.keys().next();
+                Object value = jsonObject.get(key);
+                if (key != null && value != null) {
+                    builder.add(key, String.valueOf(value));
                 }
             }
+
         } else {
             Field[] fieldArr = formBody.getClass().getFields();
             if (fieldArr != null && fieldArr.length > 0) {
