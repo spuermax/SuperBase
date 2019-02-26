@@ -69,7 +69,7 @@ public class HttpConverter {
     }
 
 
-    RequestBody stringToFormBody(String methodName, Object formBody) throws JSONException {
+    RequestBody stringToFormBody(String methodName, Object formBody) throws Exception {
         L.i(TAG, "methodName:" + methodName + "  提交表单:" + formBody.getClass().getSimpleName());
         FormBody.Builder builder = new FormBody.Builder();
         if (formBody instanceof Map) {
@@ -93,15 +93,11 @@ public class HttpConverter {
         } else {
             Field[] fieldArr = formBody.getClass().getFields();
             if (fieldArr != null && fieldArr.length > 0) {
-                try {
-                    for (Field field : fieldArr) {
-                        Object value = field.get(formBody);
-                        if (value != null) {
-                            builder.add(field.getName(), String.valueOf(value));
-                        }
+                for (Field field : fieldArr) {
+                    Object value = field.get(formBody);
+                    if (value != null) {
+                        builder.add(field.getName(), String.valueOf(value));
                     }
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
                 }
             }
         }
