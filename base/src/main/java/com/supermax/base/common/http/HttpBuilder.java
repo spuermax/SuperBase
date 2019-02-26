@@ -75,11 +75,7 @@ public class HttpBuilder {
     }
 
     public HttpBuilder setUrlParameters(HashMap<String, String> parametersr) {
-        if (paramsMap == null) {
-            paramsMap = new HashMap<>();
-        } else {
-            paramsMap.putAll(parametersr);
-        }
+        paramsMap = parametersr;
         return this;
     }
 
