@@ -172,8 +172,8 @@ public class HttpAdapter {
 
         RequestBody requestBody = null;
         Object body = null;
-        HashMap<String, String> formMap = null;
-        HashMap<String, String> paramsMap = null;
+        HashMap<String, String> formMap = new HashMap<>();
+        HashMap<String, String> paramsMap = new HashMap<>();
         String mimeType = null;
 
         for (int i = 0; i < annotations.length; i++) {
@@ -188,19 +188,13 @@ public class HttpAdapter {
 
             } else if (annotation instanceof Query) {
                 Object arg = args[i];
-                if (paramsMap == null) paramsMap = new HashMap<>();
                 String key = ((Query) annotation).value();
                 paramsMap.put(key, arg == null ? "" : String.valueOf(arg));
             } else if (annotation instanceof FormBody) {
                 Object formBody = args[i];
                 if (formBody != null) {
                     try {
-                        HashMap<String, String> map = converter.parseFormBody(method.getName(), formBody);
-                        if (formMap == null) {
-                            formMap = new HashMap<>(map);
-                        } else {
-                            formMap.putAll(map);
-                        }
+                        converter.parseFormBody(formMap, method.getName(), formBody);
                     } catch (Exception e) {
                         throw new QsException(QsExceptionType.UNEXPECTED, requestTag, "method:" + method.getName() + " message:" + e.getMessage());
                     }
@@ -209,7 +203,6 @@ public class HttpAdapter {
                 Object arg = args[i];
                 if (arg != null && !TextUtils.isEmpty(String.valueOf(arg))) {
                     String key = ((FormParam) annotation).value();
-                    if (formMap == null) formMap = new HashMap<>();
                     formMap.put(key, String.valueOf(arg));
                 }
             }
@@ -268,9 +261,8 @@ public class HttpAdapter {
         requestBuilder.headers(httpBuilder.getHeaderBuilder().build());
         if (requestTag != null) requestBuilder.tag(requestTag);
         L.i(TAG, "method:" + method.getName() + "  http request url:" + url.toString());
-
-        Request request = requestBuilder.url(url.toString()).method(requestType, requestBody).build();
         try {
+            Request request = requestBuilder.url(url.toString()).method(requestType, requestBody).build();
             if (QsHelper.getInstance().isNetworkAvailable()) {
                 Call call = client.newCall(request);
                 Response response = call.execute();

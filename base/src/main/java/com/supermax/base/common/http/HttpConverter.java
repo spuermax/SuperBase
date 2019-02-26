@@ -70,15 +70,14 @@ public class HttpConverter {
     }
 
 
-    HashMap<String, String> parseFormBody(String methodName, Object formBody) throws Exception {
-        HashMap<String, String> map = new HashMap<>();
+    void parseFormBody(HashMap<String, String> formMap, String methodName, Object formBody) throws Exception {
         if (formBody instanceof Map) {
             L.i(TAG, "methodName:" + methodName + "  FormBody类型为Map，将key和value映射到表单");
             Map dataMap = (Map) formBody;
             for (Object key : dataMap.keySet()) {
                 String keyStr = String.valueOf(key);
                 String valueStr = String.valueOf(dataMap.get(key));
-                if (!TextUtils.isEmpty(keyStr) && !TextUtils.isEmpty(valueStr)) map.put(keyStr, valueStr);
+                if (!TextUtils.isEmpty(keyStr) && !TextUtils.isEmpty(valueStr)) formMap.put(keyStr, valueStr);
             }
         } else if (formBody instanceof String) {
             L.i(TAG, "methodName:" + methodName + "  FormBody类型为String，尝试解析成Json格式（非Json格式不支持）");
@@ -87,7 +86,7 @@ public class HttpConverter {
                 String key = jsonObject.keys().next();
                 Object value = jsonObject.get(key);
                 if (key != null && value != null) {
-                    map.put(key, String.valueOf(value));
+                    formMap.put(key, String.valueOf(value));
                 }
             }
 
@@ -98,12 +97,11 @@ public class HttpConverter {
                 for (Field field : fieldArr) {
                     Object value = field.get(formBody);
                     if (value != null) {
-                        map.put(field.getName(), String.valueOf(value));
+                        formMap.put(field.getName(), String.valueOf(value));
                     }
                 }
             }
         }
-        return map;
     }
 
 
