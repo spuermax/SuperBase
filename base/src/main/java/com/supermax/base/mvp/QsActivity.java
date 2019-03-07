@@ -16,8 +16,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.ViewAnimator;
+
 import com.supermax.base.R;
 import com.supermax.base.common.aspect.ThreadPoint;
 import com.supermax.base.common.aspect.ThreadType;
@@ -126,6 +126,7 @@ public abstract class QsActivity<P extends QsPresenter> extends FragmentActivity
             rootView = View.inflate(this, rootVeiwLayout(), null);
             mViewAnimator = rootView.findViewById(android.R.id.home);
             View.inflate(this, loadingLayoutId(), null);
+            View.inflate(this, layoutId(), mViewAnimator);
             View.inflate(this, emptyLayoutId(), null);
             View.inflate(this, errorLayoutId(), null);
             initDefaultView();
