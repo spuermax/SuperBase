@@ -261,6 +261,11 @@ public class HttpAdapter {
         requestBuilder.headers(httpBuilder.getHeaderBuilder().build());
         if (requestTag != null) requestBuilder.tag(requestTag);
         L.i(TAG, "method:" + method.getName() + "  http request url:" + url.toString());
+
+        if (!QsHelper.getInstance().isNetworkAvailable()) {
+            throw new QsException(QsExceptionType.NETWORK_ERROR, requestTag, "network error...  method:" + method.getName() + " message:network disable");
+        }
+
         try {
             Request request = requestBuilder.url(url.toString()).method(requestType, requestBody).build();
             if (QsHelper.getInstance().isNetworkAvailable()) {

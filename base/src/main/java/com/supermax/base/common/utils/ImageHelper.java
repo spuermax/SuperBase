@@ -22,6 +22,8 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.Headers;
+import com.bumptech.glide.load.model.LazyHeaders;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
@@ -31,20 +33,18 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.supermax.base.common.aspect.ThreadPoint;
 import com.supermax.base.common.aspect.ThreadType;
-import com.supermax.base.common.log.L;
-import com.supermax.base.common.utils.glide.transform.PhotoFrameTransform;
-import com.supermax.base.common.utils.glide.transform.RoundCornersTransformation;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 /**
- * @Author yinzh
- * @Date   2018/10/18 16:59
- * @Description :图片加载帮助类
+ * @CreateBy qsmaxmin
+ * @Date 2017/6/20 17:35
+ * @Description 图片加载帮助类
  */
-public class ImageHelper {
 
+public class ImageHelper {
     private static ImageHelper helper;
 
     private ImageHelper() {
@@ -54,7 +54,6 @@ public class ImageHelper {
         if (helper == null) helper = new ImageHelper();
         return helper;
     }
-
 
     public Builder createRequest() {
         return new Builder(QsHelper.getInstance().getApplication());
@@ -76,8 +75,15 @@ public class ImageHelper {
         return new Builder(fragment);
     }
 
-    @ThreadPoint(ThreadType.MAIN)
-    public void clearMemoryCache() {
+    public Builder createRequest(Fragment fragment) {
+        return new Builder(fragment);
+    }
+
+    public Builder createRequest(View view) {
+        return new Builder(view);
+    }
+
+    @ThreadPoint(ThreadType.MAIN) public void clearMemoryCache() {
         Glide.get(QsHelper.getInstance().getApplication()).clearMemory();
     }
 
@@ -100,24 +106,29 @@ public class ImageHelper {
     }
 
     public class Builder {
-        private boolean enableHolder = true;
-        private RequestManager manager;
-        private Object mObject;
-        private int placeholderId;
-        private int errorId;
-        private Drawable placeholderDrawable;
-        private Drawable errorDrawable;
-        private boolean centerCrop;
-        private boolean fitCenter;
-        private boolean centerInside;
-        private int[] mCorners;
-        private int mWidth;//指定大小的宽和高
-        private int mHeight;
-        private boolean noMemoryCache;
-        private DiskCacheStrategy diskCacheStrategy;
-        private BitmapTransformation mTransformation;
-        private boolean mIsCircleCrop;
+        private boolean                 enableHolder = true;
+        private RequestManager          manager;
+        private Object                  mObject;
+        private int                     placeholderId;
+        private int                     errorId;
+        private Drawable                placeholderDrawable;
+        private Drawable                errorDrawable;
+        private boolean                 centerCrop;
+        private boolean                 fitCenter;
+        private boolean                 centerInside;
+        private int[]                   mCorners;
+        private int                     mWidth;
+        private int                     mHeight;
+        private boolean                 noMemoryCache;
+        private DiskCacheStrategy       diskCacheStrategy;
+        private BitmapTransformation    mTransformation;
+        private boolean                 mIsCircleCrop;
+        private HashMap<String, String> headers;
+        private String                  mCacheKey;
 
+        public Object getLoadObject() {
+            return mObject;
+        }
 
         Builder(Context context) {
             manager = Glide.with(context);
@@ -148,7 +159,22 @@ public class ImageHelper {
         }
 
         public Builder load(String url) {
-            if (!TextUtils.isEmpty(url)) this.mObject = createGlideUrl(url, url);
+            return load(url, url);
+        }
+
+        public Builder load(String url, boolean ignoreParamsKey) {
+            if (TextUtils.isEmpty(url)) return this;
+            if (ignoreParamsKey) {
+                String urlWithoutKey = filterOutUrlParams(url);
+                return load(url, urlWithoutKey);
+            } else {
+                return load(url, url);
+            }
+        }
+
+        public Builder load(String url, String cacheKey) {
+            this.mObject = url;
+            this.mCacheKey = cacheKey;
             return this;
         }
 
@@ -157,53 +183,22 @@ public class ImageHelper {
             return this;
         }
 
-        public Builder load(String url, boolean ignoreParamsKey) {
-            if (TextUtils.isEmpty(url)) return this;
-            if (ignoreParamsKey) {
-                Uri uri = Uri.parse(url);
-                String urlWithoutKey = uri.getScheme() + "://" + uri.getHost() + uri.getPath();
-                return load(url, urlWithoutKey);
-            } else {
-                this.mObject = createGlideUrl(url, url);
-            }
-            return this;
-        }
-
-        public Builder load(String url, String cacheKey) {
-            if (!TextUtils.isEmpty(url)) this.mObject = createGlideUrl(url, cacheKey);
-            return this;
-        }
-
-        /**
-         * 指定大小的宽和高
-         */
         public Builder resize(int width, int height) {
             this.mWidth = width;
             this.mHeight = height;
             return this;
         }
 
-        /**
-         * 站位图
-         */
         public Builder placeholder(int resourceId) {
             this.placeholderId = resourceId;
             return this;
         }
 
-        /**
-         * 站位图
-         */
         public Builder placeholder(Drawable drawable) {
             this.placeholderDrawable = drawable;
             return this;
         }
 
-        /**
-         * 异常展位图
-         * @param resourceId
-         * @return
-         */
         public Builder error(int resourceId) {
             this.errorId = resourceId;
             return this;
@@ -263,10 +258,6 @@ public class ImageHelper {
             return this;
         }
 
-        /**
-         * 禁止缓存功能
-         * @return
-         */
         public Builder noDiskCache() {
             diskCacheStrategy = DiskCacheStrategy.NONE;
             return this;
@@ -277,12 +268,22 @@ public class ImageHelper {
             return this;
         }
 
+        public Builder addHeader(String key, String value) {
+            if (headers == null) headers = new HashMap<>();
+            headers.put(key, value);
+            return this;
+        }
+
         public void into(ImageView view) {
             into(view, null);
         }
 
         public void into(final ImageView view, final ImageRequestListener listener) {
             onLoadImageBefore(this);
+            if (mObject instanceof String) {
+                String url = (String) this.mObject;
+                mObject = createGlideUrl(url, mCacheKey);
+            }
             RequestBuilder<Drawable> requestBuilder = setRequestOptionsIfNeed(manager.load(mObject));
             if (listener != null) {
                 requestBuilder = requestBuilder.listener(new RequestListener<Drawable>() {
@@ -316,22 +317,25 @@ public class ImageHelper {
             }
         }
 
-        public Bitmap getBitmap(String url) {
-            return getBitmap(url, Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
-        }
-
         public Bitmap getBitmap(Object object) {
-            return getBitmap(object, Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
+            return getBitmap(object, Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL, false);
         }
 
-        public Bitmap getBitmap(String url, int width, int height) {
-            if (TextUtils.isEmpty(url)) return null;
-            return getBitmap(new QsGlideUrl(url), width, height);
+        public Bitmap getBitmap(Object object, boolean ignoreParamsKey) {
+            return getBitmap(object, Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL, ignoreParamsKey);
         }
 
         public Bitmap getBitmap(Object object, int width, int height) {
+            return getBitmap(object, width, height, false);
+        }
+
+        public Bitmap getBitmap(Object object, int width, int height, boolean ignoreParamsKey) {
             if (object == null) return null;
             onLoadImageBefore(this);
+            if (object instanceof String) {
+                String url = (String) object;
+                object = createGlideUrl(url, ignoreParamsKey ? filterOutUrlParams(url) : url);
+            }
             RequestBuilder<Bitmap> requestBuilder = setRequestOptionsIfNeed(manager.asBitmap());
             FutureTarget<Bitmap> submit = requestBuilder.load(object).submit(width, height);
             try {
@@ -342,22 +346,25 @@ public class ImageHelper {
             return null;
         }
 
-        public Drawable getDrawable(String url) {
-            return getDrawable(url, Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
-        }
-
         public Drawable getDrawable(Object object) {
-            return getDrawable(object, Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
+            return getDrawable(object, Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL, false);
         }
 
-        public Drawable getDrawable(String url, int width, int height) {
-            if (TextUtils.isEmpty(url)) return null;
-            return getDrawable(new QsGlideUrl(url), width, height);
+        public Drawable getDrawable(Object object, boolean ignoreParamsKey) {
+            return getDrawable(object, Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL, ignoreParamsKey);
         }
 
         public Drawable getDrawable(Object object, int width, int height) {
+            return getDrawable(object, width, height, false);
+        }
+
+        public Drawable getDrawable(Object object, int width, int height, boolean ignoreParamsKey) {
             if (object == null) return null;
             onLoadImageBefore(this);
+            if (object instanceof String) {
+                String url = (String) object;
+                object = createGlideUrl(url, ignoreParamsKey ? filterOutUrlParams(url) : url);
+            }
             RequestBuilder<Drawable> requestBuilder = setRequestOptionsIfNeed(manager.asDrawable());
             FutureTarget<Drawable> submit = requestBuilder.load(object).submit(width, height);
             try {
@@ -368,16 +375,24 @@ public class ImageHelper {
             return null;
         }
 
-
         public File getImageFile(String url) {
-            return getImageFile(url, Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
+            return getImageFile(url, Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL, false);
+        }
+
+        public File getImageFile(String url, boolean ignoreParamsKey) {
+            return getImageFile(url, Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL, ignoreParamsKey);
         }
 
         public File getImageFile(String url, int width, int height) {
+            return getImageFile(url, width, height, false);
+        }
+
+        public File getImageFile(String url, int width, int height, boolean ignoreParamsKey) {
             if (TextUtils.isEmpty(url)) return null;
             onLoadImageBefore(this);
+            QsGlideUrl object = createGlideUrl(url, ignoreParamsKey ? filterOutUrlParams(url) : url);
             RequestBuilder<File> requestBuilder = setRequestOptionsIfNeed(manager.asFile());
-            FutureTarget<File> submit = requestBuilder.load(new QsGlideUrl(url)).submit(width, height);
+            FutureTarget<File> submit = requestBuilder.load(object).submit(width, height);
             try {
                 return submit.get();
             } catch (InterruptedException | ExecutionException e) {
@@ -393,6 +408,7 @@ public class ImageHelper {
             }
             return requestBuilder;
         }
+
         /**
          * private Drawable       placeholderDrawable;
          * private int            placeholderId;
@@ -421,8 +437,7 @@ public class ImageHelper {
                     || mTransformation != null;
         }
 
-        @NonNull
-        private RequestOptions createRequestOptions() {
+        @NonNull private RequestOptions createRequestOptions() {
             RequestOptions requestOptions = new RequestOptions();
             if (enableHolder) {
                 if (placeholderId > 0) {
@@ -478,13 +493,31 @@ public class ImageHelper {
         }
 
         private QsGlideUrl createGlideUrl(String url, String cacheKey) {
-            QsGlideUrl qsGlideUrl = new QsGlideUrl(url);
+            if (TextUtils.isEmpty(url)) return null;
+            QsGlideUrl qsGlideUrl;
+            if (this.headers != null && !headers.isEmpty()) {
+                LazyHeaders.Builder builder = new LazyHeaders.Builder();
+                for (String key : this.headers.keySet()) {
+                    builder.addHeader(key, headers.get(key));
+                }
+                LazyHeaders lazyHeaders = builder.build();
+                qsGlideUrl = new QsGlideUrl(url, lazyHeaders);
+            } else {
+                qsGlideUrl = new QsGlideUrl(url);
+            }
             qsGlideUrl.setCacheKey(cacheKey);
             return qsGlideUrl;
         }
-
     }
 
+    @NonNull private String filterOutUrlParams(String url) {
+        Uri uri = Uri.parse(url);
+        return uri.getScheme() + "://" + uri.getHost() + uri.getPath();
+    }
+
+    private void onLoadImageBefore(Builder builder) {
+        QsHelper.getInstance().getApplication().onCommonLoadImage(builder);
+    }
 
     private long getFolderSize(File file) {
         long size = 0;
@@ -511,32 +544,31 @@ public class ImageHelper {
         void onSuccess(Drawable drawable, Object model);
     }
 
-    public class QsGlideUrl extends GlideUrl {
-        private final String mUrl;
-        private       String mCacheKey;
+    public static class QsGlideUrl extends GlideUrl {
+        private final String url;
+        private       String cacheKey;
 
-        QsGlideUrl(String url) {
+        public QsGlideUrl(String url) {
             super(url);
-            this.mUrl = url;
+            this.url = url;
+        }
+
+        public QsGlideUrl(String url, Headers headers) {
+            super(url, headers);
+            this.url = url;
         }
 
         void setCacheKey(String cacheKey) {
-            this.mCacheKey = cacheKey;
+            this.cacheKey = cacheKey;
         }
 
         public String getUrl() {
-            return mUrl;
+            return url;
         }
 
         @Override public String getCacheKey() {
-            return TextUtils.isEmpty(mCacheKey) ? super.getCacheKey() : mCacheKey;
+            return TextUtils.isEmpty(cacheKey) ? super.getCacheKey() : cacheKey;
         }
     }
-
-    private void onLoadImageBefore(Builder builder) {
-        QsHelper.getInstance().getApplication().onCommonLoadImage(builder);
-    }
-
-
 
 }
