@@ -272,6 +272,8 @@ public class HttpAdapter {
             }
         } catch (IOException e) {
             throw new QsException(QsExceptionType.HTTP_ERROR, requestTag, "IOException...  method:" + method.getName() + " message:" + e.getMessage());
+        } catch (Throwable e) {
+            throw new QsException(QsExceptionType.NETWORK_ERROR, requestTag, "method:" + method.getName() + ", error:" + e.getMessage());
         }
     }
 

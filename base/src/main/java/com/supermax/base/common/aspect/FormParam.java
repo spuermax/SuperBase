@@ -10,7 +10,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 /**
  * @Author yinzh
  * @Date 2019/2/26 18:02
- * @Description 表单参数注解，http请求时被注解的参数将被放入一级表单中,key为参数名，value为
+ * @Description 表单参数注解，POST等请求时被注解的参数将被放入表单中
  */
 @Documented
 @Target(PARAMETER)
