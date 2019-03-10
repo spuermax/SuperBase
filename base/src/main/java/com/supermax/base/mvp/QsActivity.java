@@ -37,7 +37,7 @@ import java.util.List;
 
 /**
  * @Author yinzh
- * @Date   2018/10/12 16:37
+ * @Date 2018/10/12 16:37
  * @Description
  */
 public abstract class QsActivity<P extends QsPresenter> extends FragmentActivity implements QsIActivity {
@@ -68,7 +68,7 @@ public abstract class QsActivity<P extends QsPresenter> extends FragmentActivity
         initStatusBar();
         View view = initView();
         setContentView(view);
-        ViewBindHelper.bindView(this,view);
+        ViewBindHelper.bindView(this, view);
         if (isOpenEventBus() && !EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this);
         if (!hasInitData) {
@@ -125,10 +125,10 @@ public abstract class QsActivity<P extends QsPresenter> extends FragmentActivity
         if (isOpenViewState() && loadingLayoutId() > 0 && emptyLayoutId() > 0 && errorLayoutId() > 0) {
             rootView = View.inflate(this, rootVeiwLayout(), null);
             mViewAnimator = rootView.findViewById(android.R.id.home);
-            View.inflate(this, loadingLayoutId(), null);
+            View.inflate(this, loadingLayoutId(), mViewAnimator);
             View.inflate(this, layoutId(), mViewAnimator);
-            View.inflate(this, emptyLayoutId(), null);
-            View.inflate(this, errorLayoutId(), null);
+            View.inflate(this, emptyLayoutId(), mViewAnimator);
+            View.inflate(this, errorLayoutId(), mViewAnimator);
             initDefaultView();
         } else {
             rootView = View.inflate(this, layoutId(), null);
@@ -527,7 +527,7 @@ public abstract class QsActivity<P extends QsPresenter> extends FragmentActivity
     public final boolean onKeyDown(int keyCode, KeyEvent event) {
         if (onKeyDownListener != null && onKeyDownListener.onKeyDown(keyCode, event)) return true;
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
-        if (fragments != null && !fragments.isEmpty()){
+        if (fragments != null && !fragments.isEmpty()) {
             for (Fragment fragment : fragments) {
                 if (fragment != null && !fragment.isDetached() && fragment.isResumed() && fragment.isAdded() && fragment instanceof QsIFragment) {
                     L.i(initTag(), "onKeyDown... resume fragment:" + fragment.getClass().getSimpleName() + "  isDetach:" + fragment.isDetached() + "  isAdded:" + fragment.isAdded() + "  isResumed:" + fragment.isResumed());
@@ -544,7 +544,8 @@ public abstract class QsActivity<P extends QsPresenter> extends FragmentActivity
         return super.onKeyDown(keyCode, event);
     }
 
-    @Override public boolean onKeyDown(KeyEvent event, int keyCode) {
+    @Override
+    public boolean onKeyDown(KeyEvent event, int keyCode) {
         return super.onKeyDown(keyCode, event);
     }
 
@@ -553,23 +554,28 @@ public abstract class QsActivity<P extends QsPresenter> extends FragmentActivity
         return R.layout.super_activity_state;
     }
 
-    @Override public void setOnKeyDownListener(OnKeyDownListener listener) {
+    @Override
+    public void setOnKeyDownListener(OnKeyDownListener listener) {
         this.onKeyDownListener = listener;
     }
 
-    @Override public boolean isShowBackButtonInDefaultView() {
+    @Override
+    public boolean isShowBackButtonInDefaultView() {
         return false;
     }
 
-    @Override public boolean isTransparentStatusBar() {
+    @Override
+    public boolean isTransparentStatusBar() {
         return false;
     }
 
-    @Override public boolean isBlackIconStatusBar() {
+    @Override
+    public boolean isBlackIconStatusBar() {
         return false;
     }
 
-    @Override public boolean isTransparentNavigationBar() {
+    @Override
+    public boolean isTransparentNavigationBar() {
         return false;
     }
 
