@@ -33,6 +33,9 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.supermax.base.common.aspect.ThreadPoint;
 import com.supermax.base.common.aspect.ThreadType;
+import com.supermax.base.common.log.L;
+import com.supermax.base.common.utils.glide.transform.PhotoFrameTransform;
+import com.supermax.base.common.utils.glide.transform.RoundCornersTransformation;
 
 import java.io.File;
 import java.util.HashMap;
