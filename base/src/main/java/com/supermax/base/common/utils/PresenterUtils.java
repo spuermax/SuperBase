@@ -2,7 +2,6 @@ package com.supermax.base.common.utils;
 
 import com.supermax.base.common.log.L;
 import com.supermax.base.mvp.QsIView;
-import com.supermax.base.mvp.fragment.QsIViewPagerFragment;
 import com.supermax.base.mvp.presenter.Presenter;
 import com.supermax.base.mvp.presenter.QsPresenter;
 
@@ -34,7 +33,7 @@ public class PresenterUtils {
             }
         } else {
             String viewName = QsHelper.getInstance().getApplication().isLogOpen() ? iView.getClass().getSimpleName() : "QsIView";
-            L.i("PresenterUtils", viewName + "未添加@Presenter注解，创建Presenter将使用泛型第一个参数");
+            L.i(viewName, "该类未添加@Presenter注解，将尝试使用泛型第一个参数创建Presenter实体");
         }
 
         Type genericSuperclass = viewClass.getGenericSuperclass();
@@ -55,7 +54,7 @@ public class PresenterUtils {
         }
 
         String viewName = QsHelper.getInstance().getApplication().isLogOpen() ? iView.getClass().getSimpleName() : "QsIView";
-        L.e("PresenterUtils", viewName + "未添加泛型Presenter类，将使用默认的QsPresenter");
+        L.e(viewName, viewName + "未添加泛型Presenter类，将使用默认的QsPresenter");
         presenterImpl = (P) new QsPresenter<>();
         presenterImpl.initPresenter(iView);
         return presenterImpl;
