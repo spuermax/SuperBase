@@ -1,33 +1,21 @@
 package com.supermax.base.common.viewbind;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.util.LruCache;
 import android.view.View;
 
 import com.supermax.base.common.log.L;
-import com.supermax.base.common.utils.QsHelper;
 import com.supermax.base.common.viewbind.annotation.Bind;
 import com.supermax.base.common.viewbind.annotation.BindBundle;
 import com.supermax.base.common.viewbind.annotation.OnClick;
 import com.supermax.base.common.widget.dialog.QsDialogFragment;
-import com.supermax.base.mvp.QsIActivity;
 import com.supermax.base.mvp.QsIView;
 import com.supermax.base.mvp.adapter.QsListAdapterItem;
 import com.supermax.base.mvp.adapter.QsRecycleAdapterItem;
-import com.supermax.base.mvp.fragment.QsIFragment;
 
-import java.io.File;
-import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Map;
-
-import dalvik.system.DexFile;
 
 /**
  * @Author yinzh
@@ -44,53 +32,11 @@ public class ViewBindHelper {
 
     private static LruCache<Class<?>, ViewBindData> viewCache = new LruCache<>(200);
 
-
-    /**
-     * 典型的以内存换时间，以后可能会用上
-     */
-    public static void preInit() {
-        if (QsHelper.getInstance().getApplication().isMainProcess()) {
-            QsHelper.getInstance().getThreadHelper().getWorkThreadPoll().execute(new Runnable() {
-                @Override public void run() {
-                    long start = System.nanoTime();
-                    try {
-                        String packageName = QsHelper.getInstance().getApplication().getPackageName();
-                        String packageCodePath = QsHelper.getInstance().getApplication().getPackageCodePath();
-                        DexFile df = new DexFile(packageCodePath);
-                        Enumeration<String> entries = df.entries();
-                        while (entries.hasMoreElements()) {
-                            String classPath = entries.nextElement();
-                            if (classPath.startsWith(packageName) && !classPath.contains("$") && !classPath.contains("\\.R\\.")) {
-                                try {
-                                    Class<?> aClass = Class.forName(classPath);
-                                    ViewBindData viewBindData = viewCache.get(aClass);
-                                    if (viewBindData == null && QsIActivity.class.isAssignableFrom(aClass) || QsIFragment.class.isAssignableFrom(aClass)
-                                            || QsListAdapterItem.class.isAssignableFrom(aClass) || QsRecycleAdapterItem.class.isAssignableFrom(aClass)
-                                            || QsDialogFragment.class.isAssignableFrom(aClass)) {
-                                        viewCache.put(aClass, new ViewBindData(aClass));
-                                    }
-                                } catch (ClassNotFoundException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    long end = System.nanoTime();
-                    Log.e("ViewBindHelper", "init...... cache size:" + viewCache.size() + ", use time:" + (end - start) / 1000000f + "ms");
-                }
-            });
-        }
-    }
-
     private static ViewBindData getBindData(Class<?> clazz){
         ViewBindData cacheBindData = viewCache.get(clazz);
         if(cacheBindData == null){
             cacheBindData = new ViewBindData(clazz);
-            if (QsHelper.getInstance().getApplication().isLogOpen()) {
+            if (L.isEnable()) {
                 L.i(cacheBindData.targetName, "create new ViewBindData by class, cache size:" + viewCache.size());
             }
         }

@@ -1,6 +1,5 @@
 package com.supermax.base.common.widget.dialog;
 
-import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,10 +8,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 
-import com.supermax.base.R;
 import com.supermax.base.common.utils.QsHelper;
 import com.supermax.base.common.viewbind.ViewBindHelper;
 
@@ -29,23 +26,27 @@ public abstract class QsDialogFragment extends DialogFragment {
         setStyle(DialogFragment.STYLE_NO_TITLE, getDialogTheme());
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (getDialog() != null && getDialog().getWindow() != null) {
+            getDialog().getWindow().getDecorView().setPadding(0, 0, 0, 0);
+            setAttribute(getDialog().getWindow().getAttributes());
+        }
+        initData();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewBindHelper.bindBundle(this, getArguments());
-        getDialog().setCanceledOnTouchOutside(true);
-        final Window window = getDialog().getWindow();
-        if (window != null) {
-            window.setBackgroundDrawableResource(android.R.color.transparent);
-            window.getDecorView().setPadding(0, 0, 0, 0);
-            WindowManager.LayoutParams params = window.getAttributes();
-            setAttribute(params);
-            window.setAttributes(params);
+        if (getDialog() != null) {
+            getDialog().setCanceledOnTouchOutside(true);
+            getDialog().setCancelable(true);
         }
-
-        View dialogView = getDialogView(inflater, container);
-        ViewBindHelper.bindView(this, dialogView);
-        return dialogView;
+        View customView = inflater.inflate(layoutId(), null);
+        ViewBindHelper.bindView(this, customView);
+        return customView;
     }
 
     @Override
@@ -61,9 +62,6 @@ public abstract class QsDialogFragment extends DialogFragment {
     public void onViewClick(View view) {
     }
 
-    protected void initData() {
-
-    }
 
     protected void setAttribute(WindowManager.LayoutParams params) {
         params.gravity = Gravity.BOTTOM;
@@ -75,9 +73,19 @@ public abstract class QsDialogFragment extends DialogFragment {
 
     protected abstract View getDialogView(LayoutInflater inflater, ViewGroup viewGroup);
 
+    protected abstract int layoutId();
+
+    protected abstract void initData();
+
     public void show() {
-        QsHelper.getInstance().commitDialogFragment(this);
+        show(null);
     }
 
+    public void show(Bundle bundle) {
+        if (bundle != null) {
+            setArguments(bundle);
+        }
+        QsHelper.getInstance().commitDialogFragment(this);
+    }
 
 }

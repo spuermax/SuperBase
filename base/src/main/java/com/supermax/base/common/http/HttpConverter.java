@@ -3,32 +3,19 @@ package com.supermax.base.common.http;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
-import com.supermax.base.common.exception.QsException;
-import com.supermax.base.common.exception.QsExceptionType;
 import com.supermax.base.common.log.L;
-import com.supermax.base.common.utils.StreamCloseUtils;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
-import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 
 /**
  * @Author yinzh
@@ -162,11 +149,12 @@ public class HttpConverter {
     private String unicodeToCn(final String str) {
         String singlePattern = "[0-9|a-f|A-F]";
         String pattern = singlePattern + singlePattern + singlePattern + singlePattern;
+
         StringBuilder sb = new StringBuilder();
         int length = str.length();
 
         for (int i = 0; i < length; ) {
-            String tmpStr = str.substring(i);
+            String tmpStr = str.substring(i, (i < length - 6) ? (i + 6) : length);
             if (isStartWithUnicode(pattern, tmpStr)) {//分支1
                 sb.append(unicodeToCnSingle(tmpStr));
                 i += 6;
@@ -195,7 +183,7 @@ public class HttpConverter {
     private String unicodeToCnSingle(final String str) {
         int code = Integer.decode("0x" + str.substring(2, 6));
         char c = (char) code;
-        return String.valueOf(c);
+        return String.valueOf((char) code);
     }
 
 }

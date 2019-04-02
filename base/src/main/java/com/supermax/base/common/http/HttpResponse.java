@@ -60,10 +60,10 @@ public class HttpResponse {
 
 
     private String getJsonFromBody(ResponseBody body, Object requestTag) {
-        Charset chcarset = getChcarset(body);
+        Charset charset = getChcarset(body);
         InputStream inputStream = body.byteStream();
         if (inputStream != null) {
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream, chcarset);
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream, charset);
             BufferedReader bufferedReader = null;
             try {
                 bufferedReader = new BufferedReader(inputStreamReader);
