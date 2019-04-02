@@ -14,6 +14,10 @@ public class L {
     private L() {
     }
 
+    public static boolean isEnable() {
+        return enable;
+    }
+
     /**
      * 初始化操作
      *

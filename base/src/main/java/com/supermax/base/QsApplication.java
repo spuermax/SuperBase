@@ -9,6 +9,7 @@ import android.support.annotation.LayoutRes;
 import com.supermax.base.common.dialog.QsProgressDialog;
 import com.supermax.base.common.http.HttpBuilder;
 import com.supermax.base.common.http.HttpResponse;
+import com.supermax.base.common.http.QsHttpCallback;
 import com.supermax.base.common.log.L;
 import com.supermax.base.common.utils.ImageHelper;
 import com.supermax.base.common.utils.QsHelper;
@@ -41,6 +42,13 @@ public abstract class QsApplication extends Application {
      *                ......
      */
     public abstract void initHttpAdapter(HttpBuilder builder) throws Exception;
+
+    /**
+     * http请求全局回调
+     */
+    public QsHttpCallback registerGlobalHttpListener() {
+        return null;
+    }
 
     public void onActivityCreate(Activity activity) {
     }
