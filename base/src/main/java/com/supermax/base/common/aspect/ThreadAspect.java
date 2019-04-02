@@ -10,16 +10,17 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
  * @Author yinzh
- * @Date   2018/10/16 15:08
+ * @Date 2018/10/16 15:08
  * @Description: AOP 线程切面类
  */
 @Aspect
 public class ThreadAspect {
+
+    private static final String TAG = "ThreadAspect";
 
     private static final String POINTCUT_METHOD_MAIN = "execution(@com.supermax.base.common.aspect.ThreadPoint(com.supermax.base.common.aspect.ThreadType.MAIN) * *(..))";
     private static final String POINTCUT_METHOD_HTTP = "execution(@com.supermax.base.common.aspect.ThreadPoint(com.supermax.base.common.aspect.ThreadType.HTTP) * *(..))";
@@ -42,9 +43,11 @@ public class ThreadAspect {
         return null;
     }
 
-    @Around(POINTCUT_METHOD_HTTP) public Object onCheckNetHttpExecutor(final ProceedingJoinPoint joinPoint) throws Throwable {
+    @Around(POINTCUT_METHOD_HTTP)
+    public Object onCheckNetHttpExecutor(final ProceedingJoinPoint joinPoint) throws Throwable {
         QsHelper.getInstance().getThreadHelper().getHttpThreadPoll().execute(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 L.i("ThreadAspect", joinPoint.toShortString() + " in http thread... ");
                 startOriginalMethod(joinPoint);
             }
@@ -52,9 +55,11 @@ public class ThreadAspect {
         return null;
     }
 
-    @Around(POINTCUT_METHOD_WORK) public Object onWorkExecutor(final ProceedingJoinPoint joinPoint) throws Throwable {
+    @Around(POINTCUT_METHOD_WORK)
+    public Object onWorkExecutor(final ProceedingJoinPoint joinPoint) throws Throwable {
         QsHelper.getInstance().getThreadHelper().getWorkThreadPoll().execute(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 L.i("ThreadAspect", joinPoint.toShortString() + " in work thread... ");
                 startOriginalMethod(joinPoint);
             }
@@ -62,17 +67,17 @@ public class ThreadAspect {
         return null;
     }
 
-    @Around(POINTCUT_METHOD_SINGLE_WORK) public Object onSingleWorkExecutor(final ProceedingJoinPoint joinPoint) throws Throwable {
+    @Around(POINTCUT_METHOD_SINGLE_WORK)
+    public Object onSingleWorkExecutor(final ProceedingJoinPoint joinPoint) throws Throwable {
         QsHelper.getInstance().getThreadHelper().getSingleThreadPoll().execute(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 L.i("ThreadAspect", joinPoint.toShortString() + " in single work thread... ");
                 startOriginalMethod(joinPoint);
             }
         });
         return null;
     }
-
-
 
 
     /**
@@ -94,17 +99,17 @@ public class ThreadAspect {
                         public void run() {
                             try {
                                 methodError.invoke(target, e);
-                            } catch (IllegalAccessException e1) {
-                                e1.printStackTrace();
-                            } catch (InvocationTargetException e1) {
+                            } catch (Exception e1) {
                                 e1.printStackTrace();
                             }
                         }
                     });
                 }
 
-            } catch (NoSuchMethodException e1) {
-                e1.printStackTrace();
+            } catch (NoSuchMethodException e2) {
+                L.e(TAG, "被@ThreadAspect注解的函数在执行出现错误时将异常抛到该类的public void methodError(QsException e)函数里，所以该类必须要有这个函数" +
+                        "                        \"也可以自己开启异步线程请求网络(QsHelper.getInstance().getHttpHelper().create(XXX.class, Object o))，并用try catch把网络请求代码包起来，自己处理异常。");
+                e2.printStackTrace();
             }
         } catch (Throwable throwable) {
             throwable.printStackTrace();
