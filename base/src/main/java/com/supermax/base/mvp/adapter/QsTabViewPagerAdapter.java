@@ -3,7 +3,7 @@ package com.supermax.base.mvp.adapter;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
-import com.supermax.base.common.utils.QsHelper;
+import com.supermax.base.common.log.L;
 import com.supermax.base.common.widget.viewpager.PagerSlidingTabStrip;
 import com.supermax.base.common.widget.viewpager.ViewPagerHelper;
 
@@ -15,7 +15,7 @@ import com.supermax.base.common.widget.viewpager.ViewPagerHelper;
 public class QsTabViewPagerAdapter extends QsViewPagerAdapter implements PagerSlidingTabStrip.CustomTabProvider {
 
     protected String initTag() {
-        return QsHelper.getInstance().getApplication().isLogOpen() ? getClass().getSimpleName() : "QsTabViewPagerAdapter";
+        return L.isEnable() ? getClass().getSimpleName() : "QsTabViewPagerAdapter";
     }
 
     public QsTabViewPagerAdapter(FragmentManager fragmentManager, ViewPagerHelper helper) {

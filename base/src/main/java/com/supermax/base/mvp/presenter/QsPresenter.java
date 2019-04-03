@@ -34,7 +34,7 @@ public class QsPresenter<V extends QsIView> {
     private V mView;
 
     protected String initTag() {
-        return QsHelper.getInstance().getApplication().isLogOpen() ? getClass().getSimpleName() : "QsPresenter";
+        return L.isEnable() ? getClass().getSimpleName() : "QsPresenter";
     }
 
     public Context getContext() {

@@ -10,12 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.supermax.base.common.log.L;
-import com.supermax.base.common.utils.QsHelper;
+import com.supermax.base.common.widget.viewpager.QsViewPager;
+import com.supermax.base.common.widget.viewpager.ViewPagerHelper;
 import com.supermax.base.common.widget.viewpager.headerpager.base.InnerScrollerContainer;
 import com.supermax.base.common.widget.viewpager.headerpager.base.OuterPagerAdapter;
 import com.supermax.base.common.widget.viewpager.headerpager.base.OuterScroller;
-import com.supermax.base.common.widget.viewpager.QsViewPager;
-import com.supermax.base.common.widget.viewpager.ViewPagerHelper;
 import com.supermax.base.mvp.fragment.QsIFragment;
 import com.supermax.base.mvp.model.QsModelPager;
 
@@ -34,7 +33,7 @@ public class QsViewPagerAdapter extends PagerAdapter implements OuterPagerAdapte
     private ViewPagerHelper pagerHelper;
 
     protected String initTag() {
-        return QsHelper.getInstance().getApplication().isLogOpen() ? getClass().getSimpleName() : "QsViewPagerAdapter";
+        return L.isEnable() ? getClass().getSimpleName() : "QsViewPagerAdapter";
     }
 
     public QsViewPagerAdapter(FragmentManager fragmentManager, ViewPagerHelper pagerHelper) {

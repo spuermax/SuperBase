@@ -52,7 +52,7 @@ public abstract class QsActivity<P extends QsPresenter> extends FragmentActivity
 
     @Override
     public String initTag() {
-        return QsHelper.getInstance().getApplication().isLogOpen() ? getClass().getSimpleName() : "QsActivity";
+        return L.isEnable() ? getClass().getSimpleName() : "QsActivity";
     }
 
     @Override

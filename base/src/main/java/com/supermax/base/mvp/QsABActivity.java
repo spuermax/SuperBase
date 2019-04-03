@@ -54,7 +54,7 @@ public abstract class QsABActivity<P extends QsPresenter> extends AppCompatActiv
 
     @Override
     public String initTag() {
-        return QsHelper.getInstance().getApplication().isLogOpen() ? getClass().getSimpleName() : "QsABActivity";
+        return L.isEnable() ? getClass().getSimpleName() : "QsABActivity";
     }
 
     @Override
