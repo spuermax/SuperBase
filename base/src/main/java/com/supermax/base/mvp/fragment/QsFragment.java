@@ -26,7 +26,6 @@ import com.supermax.base.common.dialog.QsProgressDialog;
 import com.supermax.base.common.log.L;
 import com.supermax.base.common.utils.PresenterUtils;
 import com.supermax.base.common.utils.QsHelper;
-import com.supermax.base.common.viewbind.ViewBindData;
 import com.supermax.base.common.viewbind.ViewBindHelper;
 import com.supermax.base.common.widget.ptr.PtrFrameLayout;
 import com.supermax.base.mvp.QsIABActivity;
@@ -235,11 +234,12 @@ public abstract class QsFragment<P extends QsPresenter> extends Fragment impleme
         if (mProgressDialog != null) {
             mProgressDialog.setMessage(message);
             mProgressDialog.setCancelable(cancelAble);
-            if (!mProgressDialog.isAdded()) {
+            if (!mProgressDialog.isAdded() && !mProgressDialog.isShowing()) {
+                mProgressDialog.setIsShowing(true);
                 QsHelper.getInstance().commitDialogFragment(getFragmentManager(), mProgressDialog);
             }
         } else {
-            L.e(initTag(), "you should override the method 'Application.getLoadingDialog' and return a dialog when called the method : loading(...) ");
+            L.e(initTag(), "you should override the method 'Application.getLoadingDialog() or this.getLoadingDialog()' and return a dialog when called the method : loading(...) ");
         }
     }
 

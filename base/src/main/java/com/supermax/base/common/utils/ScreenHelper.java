@@ -9,7 +9,7 @@ import java.util.Stack;
 
 /**
  * @Author yinzh
- * @Date   2018/10/13 09:32
+ * @Date 2018/10/13 09:32
  * @Description 屏幕管理帮助类
  */
 public class ScreenHelper {
@@ -44,30 +44,51 @@ public class ScreenHelper {
     /**
      * 入栈
      */
-    public void pushActivity(FragmentActivity activity){
-        if(activity != null){
+    public void pushActivity(FragmentActivity activity) {
+        if (activity != null) {
             fragmentActivities.add(activity);
-            onActivityCallback(activity);
-            L.i(TAG, "activity入栈:" + activity.getClass().getSimpleName() + "   当前栈大小：" + fragmentActivities.size());
+            onActivityAdded(activity);
+            if (QsHelper.getInstance().getApplication().isLogOpen()) {
+                L.i(TAG, "activity入栈:" + activity.getClass().getSimpleName() + "，当前栈大小：" + fragmentActivities.size());
+            }
         } else {
             L.e(TAG, "pushActivity 传入的参数为空!");
         }
     }
 
+    /**
+     * 将元素置顶
+     */
+    public void bringActivityToTop(FragmentActivity activity) {
+        if (activity == null) return;
+        if (currentActivity() == activity) return;
+        int index = fragmentActivities.indexOf(activity);
+        if (index > 0) {
+            FragmentActivity remove = fragmentActivities.remove(index);
+            if (remove != null) fragmentActivities.add(remove);
+            if (QsHelper.getInstance().getApplication().isLogOpen()) {
+                L.i(TAG, "activity(" + activity.getClass().getSimpleName() + ")获取到焦点移到栈顶，当前栈大小：" + fragmentActivities.size());
+            }
+        }
+    }
 
-    public void popActivity(FragmentActivity activity){
-        if(activity != null){
+    public void popActivity(FragmentActivity activity) {
+        if (activity != null) {
+            activity.finish();
             fragmentActivities.remove(activity);
-            onActivityRemoveCallback(activity);
-            L.i(TAG, "activity出栈:" + activity.getClass().getSimpleName() + "   当前栈大小：" + fragmentActivities.size());
+            onActivityRemoved(activity);
+            if (QsHelper.getInstance().getApplication().isLogOpen()) {
+                L.i(TAG, "activity出栈:" + activity.getClass().getSimpleName() + "，当前栈大小：" + fragmentActivities.size());
+            }
         } else {
             L.e(TAG, "popActivity 传入的参数为空!");
         }
 
-        if(fragmentActivities.size() <= 0){
+        if (fragmentActivities.size() <= 0) {
             QsHelper.getInstance().getImageHelper().clearMemoryCache();
             QsHelper.getInstance().getThreadHelper().shutdown();
             if (listeners != null) listeners.clear();
+            L.i(TAG, "pop all Activity, app shutdown...");
         }
     }
 
@@ -77,7 +98,7 @@ public class ScreenHelper {
      */
     public void popAllActivityExceptMain(Class clazz) {
         while (true) {
-            if(clazz != null && fragmentActivities.size() <= 1)break;
+            if (clazz != null && fragmentActivities.size() <= 1) break;
             FragmentActivity activity = currentActivity();
             if (activity == null) break;
             if (activity.getClass().equals(clazz)) break;
@@ -85,7 +106,7 @@ public class ScreenHelper {
         }
     }
 
-    public void popAllActivity(){
+    public void popAllActivity() {
         while (fragmentActivities.size() > 0) {
             FragmentActivity fragmentActivity = fragmentActivities.get(0);
             popActivity(fragmentActivity);
@@ -116,7 +137,7 @@ public class ScreenHelper {
     }
 
 
-    private void onActivityCallback(FragmentActivity activity) {
+    private void onActivityAdded(FragmentActivity activity) {
         if (listeners != null) {
             for (OnTaskChangeListener listener : listeners) {
                 listener.onActivityAdd(activity);
@@ -124,16 +145,13 @@ public class ScreenHelper {
         }
     }
 
-    private void onActivityRemoveCallback(FragmentActivity activity) {
+    private void onActivityRemoved(FragmentActivity activity) {
         if (listeners != null) {
             for (OnTaskChangeListener listener : listeners) {
                 listener.onActivityRemove(activity);
             }
         }
     }
-
-
-
 
 
 }

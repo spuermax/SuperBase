@@ -11,7 +11,6 @@ import android.os.Environment;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.annotation.DrawableRes;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -24,7 +23,6 @@ import android.support.v4.app.FragmentTransaction;
 import com.supermax.base.QsApplication;
 import com.supermax.base.common.aspect.ThreadPoint;
 import com.supermax.base.common.aspect.ThreadType;
-import com.supermax.base.common.dialog.QsProgressDialog;
 import com.supermax.base.common.http.HttpAdapter;
 import com.supermax.base.common.threadpoll.QsThreadPollHelper;
 
@@ -222,16 +220,7 @@ public class QsHelper {
     }
 
     @ThreadPoint(ThreadType.MAIN) public void commitDialogFragment(FragmentManager fragmentManager, DialogFragment dialogFragment) {
-        if (fragmentManager != null && dialogFragment != null) {
-            if (dialogFragment instanceof QsProgressDialog) {
-                QsProgressDialog dialog = (QsProgressDialog) dialogFragment;
-                if (dialog.isAdded() || dialog.isShowing()) {
-                    return;
-                }
-                ((QsProgressDialog) dialogFragment).setIsShowing(true);
-            } else if (dialogFragment.isAdded()) {
-                return;
-            }
+        if (fragmentManager != null && dialogFragment != null && !dialogFragment.isAdded()) {
             fragmentManager.beginTransaction().add(dialogFragment, dialogFragment.getClass().getSimpleName()).commitAllowingStateLoss();
         }
     }

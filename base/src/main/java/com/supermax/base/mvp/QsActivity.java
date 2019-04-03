@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -59,7 +60,7 @@ public abstract class QsActivity<P extends QsPresenter> extends FragmentActivity
         return R.layout.super_framelayout;
     }
 
-    @Override
+    @CallSuper @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         QsHelper.getInstance().getScreenHelper().pushActivity(this);
@@ -83,10 +84,11 @@ public abstract class QsActivity<P extends QsPresenter> extends FragmentActivity
         QsHelper.getInstance().getApplication().onActivityStart(this);
     }
 
-    @Override
+   @CallSuper @Override
     protected void onResume() {
         super.onResume();
-        QsHelper.getInstance().getApplication().onActivityResume(this);
+       QsHelper.getInstance().getScreenHelper().bringActivityToTop(this);
+       QsHelper.getInstance().getApplication().onActivityResume(this);
     }
 
     @Override
@@ -325,11 +327,12 @@ public abstract class QsActivity<P extends QsPresenter> extends FragmentActivity
         if (mProgressDialog != null) {
             mProgressDialog.setMessage(message);
             mProgressDialog.setCancelable(cancelAble);
-            if (!mProgressDialog.isAdded()) {
+            if (!mProgressDialog.isAdded() && !mProgressDialog.isShowing()) {
+                mProgressDialog.setIsShowing(true);
                 QsHelper.getInstance().commitDialogFragment(getSupportFragmentManager(), mProgressDialog);
             }
         } else {
-            L.e(initTag(), "you should override the method 'Application.getLoadingDialog' and return a dialog when called the method : loading(...) ");
+            L.e(initTag(), "you should override the method 'Application.getLoadingDialog() or this.getLoadingDialog()' and return a dialog when called the method : loading(...) ");
         }
     }
 
