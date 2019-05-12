@@ -5,7 +5,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.text.TextUtils;
 import android.view.Gravity;
-import android.widget.TextView;
 
 import com.supermax.base.common.utils.CommonUtils;
 import com.supermax.base.common.widget.indicator.navigator.impl.IMeasurablePagerTitleView;
@@ -15,7 +14,7 @@ import com.supermax.base.common.widget.indicator.navigator.impl.IMeasurablePager
  * @Date 2018/11/19 16:00
  * @Description
  */
-public class SimplePagerTitleView extends TextView implements IMeasurablePagerTitleView{
+public class SimplePagerTitleView extends android.support.v7.widget.AppCompatTextView implements IMeasurablePagerTitleView{
 
     protected int mSelectedColor;
     protected int mNormalColor;
